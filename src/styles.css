@@ -1,1 +1,62 @@
-/* You can add global styles to this file, and also import other style files */
+/* Root styles */
+/* Thanks to Bootstrap */
+:root {
+  --color-blue: #0d6efd;
+  --color-indigo: #6610f2;
+  --color-purple: #6f42c1;
+  --color-pink: #d63384;
+  --color-red: #dc3545;
+  --color-orange: #fd7e14;
+  --color-yellow: #ffc107;
+  --color-green: #198754;
+  --color-teal: #20c997;
+  --color-cyan: #0dcaf0;
+  --color-black: #000;
+  --color-white: #fff;
+  --color-gray: #6c757d;
+  --color-gray-dark: #343a40;
+  --color-gray-100: #f8f9fa;
+  --color-gray-200: #e9ecef;
+  --color-gray-300: #dee2e6;
+  --color-gray-400: #ced4da;
+  --color-gray-500: #adb5bd;
+  --color-gray-600: #6c757d;
+  --color-gray-700: #495057;
+  --color-gray-800: #343a40;
+  --color-gray-900: #212529;
+  --color-primary: #0d6efd;
+  --color-primary-rgb: 13,110,253;
+  --color-secondary: #6c757d;
+  --color-secondary-rgb: 108,117,125;
+  --color-success: #198754;
+  --color-success-rgb: 25,135,84;
+  --color-warning: #ffc107;
+  --color-warning-rgb: 255,193,7;
+  --color-info: #0dcaf0;
+  --color-info-rgb: 13,202,240;
+  --color-danger: #dc3545;
+  --color-danger-rgb: 220,53,69;
+  --color-light: #f8f9fa;
+  --color-light-rgb: 248,249,250;
+  --color-dark: #212529;
+  --color-dark-rgb: 33,37,41;
+}
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: left;
+  color: var(--color-light);
+  background-color: var(--color-dark);
+}
