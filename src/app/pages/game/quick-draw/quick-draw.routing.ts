@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 // Spaces
-import { GamesPageComponent } from './games.component'
+import { QuickDrawPageComponent } from './quick-draw.component'
 
 const routes: Routes = [
   {
     path: '',
-    component: GamesPageComponent,
+    component: QuickDrawPageComponent
   }
 ]
 
@@ -14,5 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class GamesPageRouting {
+export class QuickDrawPageRouting {
 }

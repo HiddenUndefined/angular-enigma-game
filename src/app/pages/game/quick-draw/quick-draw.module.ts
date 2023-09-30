@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core'
-// Spaces
-import { GamesPageComponent } from './games.component'
 import { RouterLink } from '@angular/router'
+// Spaces
+import { QuickDrawPageComponent } from './quick-draw.component'
 
 @NgModule({
   imports: [
     RouterLink
   ],
   declarations: [
-    GamesPageComponent
+    QuickDrawPageComponent
   ]
 })
-export class GamesPageModule {
+export class QuickDrawPageModule {
 }
