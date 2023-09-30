@@ -1,11 +1,9 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core'
 import { LayoutsModule } from '@app/layouts'
-// import { PagesModule } from '@app/pages'
 
 @NgModule({
   imports: [
     LayoutsModule
-    // PagesModule
   ],
   exports: []
 })
