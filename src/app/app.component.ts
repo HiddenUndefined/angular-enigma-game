@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <nav>
       <a routerLink="home" routerLinkActive="active">Home</a>
-      <a routerLink="game" routerLinkActive="active">Game</a>
+      <a routerLink="games" routerLinkActive="active">Games</a>
       <a routerLink="oops" routerLinkActive="active">404</a>
     </nav>
     <router-outlet />
@@ -28,6 +28,8 @@ import { Component } from '@angular/core';
           &.active,
           &:hover {
             color: var(--color-primary);
+          }
+          &.active {
             text-decoration: underline;
           }
         }

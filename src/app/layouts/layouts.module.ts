@@ -3,13 +3,13 @@ import { RouterModule } from '@angular/router'
 // Spaces
 import { NotFoundLayoutComponent } from './not-found'
 import { WebsiteLayoutComponent } from './website'
-import { GameLayoutComponent } from './game'
+import { GamesLayoutComponent } from './games'
 
 @NgModule({
   declarations: [
     NotFoundLayoutComponent,
     WebsiteLayoutComponent,
-    GameLayoutComponent
+    GamesLayoutComponent
   ],
   imports: [
     RouterModule
