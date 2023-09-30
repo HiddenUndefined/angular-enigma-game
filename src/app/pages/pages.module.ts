@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core'
 // Spaces
 import { NotFoundPageModule } from '@pages/not-found'
 import { HomePageModule } from '@pages/home'
-import { GamePageModule } from '@pages/game'
+import { GamesPageModule } from '@pages/games'
 
 @NgModule({
   exports: [
     NotFoundPageModule,
     HomePageModule,
-    GamePageModule
+    GamesPageModule
   ]
 })
 export class PagesModule {

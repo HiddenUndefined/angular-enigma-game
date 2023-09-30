@@ -1,13 +1,24 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 // Layouts
-import { GameLayoutComponent } from '@layouts/game'
+import { GamesLayoutComponent } from '@layouts/games'
 import { WebsiteLayoutComponent } from '@layouts/website'
 import { NotFoundLayoutComponent } from '@layouts/not-found'
 // Pages
 import { NotFoundPageComponent } from '@pages/not-found'
 
 const routes: Routes = [
+  // Game pages
+  {
+    path: 'games',
+    component: GamesLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('@pages/games/games.module').then(m => m.GamesPageModule)
+      }
+    ]
+  },
   // Website pages
   {
     path: '',
@@ -21,17 +32,6 @@ const routes: Routes = [
       {
         path: 'home',
         loadChildren: () => import('@pages/home/home.module').then(m => m.HomePageModule)
-      }
-    ]
-  },
-  // Dashboard pages
-  {
-    path: 'game',
-    component: GameLayoutComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('@pages/game/game.module').then(m => m.GamePageModule)
       }
     ]
   },
