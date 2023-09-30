@@ -1,8 +1,12 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core'
+import { PagesModule } from '@app/pages'
+import { LayoutsModule } from '@app/layouts'
 
-// @TODO: Import and provide the layouts and pages modules here
 @NgModule({
-  imports: [],
+  imports: [
+    LayoutsModule,
+    PagesModule
+  ],
   exports: []
 })
 export class CoreModule {
