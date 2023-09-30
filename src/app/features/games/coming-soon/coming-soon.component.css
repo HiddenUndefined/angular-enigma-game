@@ -1,0 +1,93 @@
+:host {
+  max-width: 768px;
+  width: 100%;
+  gap: 8px;
+  padding: 24px 12px;
+  text-align: center;
+  color: var(--color-gray-100);
+  background-color: var(--color-gray-800);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Label */
+  & > small {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    padding: 3px 8px;
+    color: var(--color-white);
+    background-color: var(--color-info);
+    border-radius: 4px;
+  }
+  /* Title */
+  & > strong {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  /* Description */
+  & > p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+  /* Link */
+  & > a {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    text-decoration: underline;
+    margin-top: 24px;
+    color: var(--color-primary);
+  }
+}
+/* Small tablets */
+@media screen and (min-width: 768px) {
+  :host {
+    padding: 48px 24px;
+  }
+}
+/* Large tablets and small desktops */
+@media screen and (min-width: 1080px) {
+  :host {
+    gap: 12px;
+    padding: 120px 48px;
+    /* Label */
+    & > small {
+      font-size: 14px;
+    }
+    /* Title */
+    & > strong {
+      font-size: 32px;
+    }
+    /* Description */
+    & > p {
+      font-size: 16px;
+    }
+  }
+}
+/* Large desktops */
+@media screen and (min-width: 1480px) {
+  :host {
+    /* Label */
+    & > small {
+      font-size: 15px;
+    }
+    /* Title */
+    & > strong {
+      font-size: 42px;
+    }
+    /* Description */
+    & > p {
+      font-size: 18px;
+    }
+    /* Link */
+    & > a {
+      font-size: 16px;
+    }
+  }
+}

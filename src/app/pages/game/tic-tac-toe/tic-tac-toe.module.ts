@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterLink } from '@angular/router'
+// Global
+import { ComingSoonComponent } from '@features/games/coming-soon'
 // Spaces
 import { TicTacToePageComponent } from './tic-tac-toe.component'
 
@@ -8,7 +10,8 @@ import { TicTacToePageComponent } from './tic-tac-toe.component'
     TicTacToePageComponent
   ],
   imports: [
-    RouterLink
+    RouterLink,
+    ComingSoonComponent
   ]
 })
 export class TicTacToePageModule {
