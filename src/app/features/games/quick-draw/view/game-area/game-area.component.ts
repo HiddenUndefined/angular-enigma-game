@@ -3,7 +3,7 @@ import { NgClass, NgForOf, NgIf } from '@angular/common'
 // Global
 import { ButtonComponent } from '@components/atoms'
 // Spaces
-import { GridAreaService } from '../../core/grid-area'
+import { GridAreaService } from '@quickDraw/core/grid-area'
 
 
 @Component({

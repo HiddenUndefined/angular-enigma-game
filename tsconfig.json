@@ -12,6 +12,7 @@
       "@features/*": ["./src/app/features/*"],
       "@services/*": ["./src/app/services/*"],
       "@shared/*": ["./src/app/shared/*"],
+      "@quickDraw/*": ["./src/app/features/games/quick-draw/*"],
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

@@ -3,9 +3,9 @@ import { NgIf } from '@angular/common'
 // Global
 import { ButtonComponent } from '@components/atoms'
 // Spaces
-import { QuickDrawCoreService } from '../../core/core.service'
-import { ControlService } from '../../core/control'
-import { StatusesService } from '../../core/statuses'
+import { QuickDrawCoreService } from '@quickDraw/core/core.service'
+import { ControlService } from '@quickDraw/core/control'
+import { StatusesService } from '@quickDraw/core/statuses'
 
 @Component({
   standalone: true,

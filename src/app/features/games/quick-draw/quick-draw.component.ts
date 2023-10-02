@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core'
 // Spaces
-import { QuickDrawCoreService } from './core/core.service'
-import { GameAreaComponent } from './view/game-area/game-area.component'
-import { ControlComponent } from './view/control/control.component'
-import { ScoreComponent } from './view/score/score.component'
+import { QuickDrawCoreService } from '@quickDraw/core//core.service'
+import { GameAreaComponent } from '@quickDraw/view/game-area'
+import { ControlComponent } from '@quickDraw/view/control'
+import { ScoreComponent } from '@quickDraw/view/score'
 
 @Component({
   standalone: true,

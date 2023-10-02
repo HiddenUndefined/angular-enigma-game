@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { EGridCellStatus, ICell, IGridSize, TGridCellStatus } from '@features/games/quick-draw/core/core.models'
+import { EGridCellStatus, ICell, IGridSize, TGridCellStatus } from '@quickDraw/core/core.models'
 
 @Injectable({
   providedIn: 'root'

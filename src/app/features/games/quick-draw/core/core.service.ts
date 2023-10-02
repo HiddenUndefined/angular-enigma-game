@@ -1,9 +1,7 @@
-import { Injectable, Input } from '@angular/core'
-// Models
-import { IGridSize } from './core.models'
+import { Injectable } from '@angular/core'
 // Services
-import { StatusesService } from './statuses/statuses.service'
-import { GridAreaService } from './grid-area/grid-area.service'
+import { StatusesService } from '@quickDraw/core/statuses'
+import { GridAreaService } from '@quickDraw/core/grid-area'
 
 @Injectable({
   providedIn: 'root'

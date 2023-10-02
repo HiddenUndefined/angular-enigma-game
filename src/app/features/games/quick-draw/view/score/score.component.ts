@@ -1,8 +1,8 @@
 import { Component } from '@angular/core'
 import { NgClass } from '@angular/common'
 // Spaces
-import { ControlService } from '../../core/control'
-import { ScoreService } from '@features/games/quick-draw/core/score'
+import { ControlService } from '@quickDraw/core/control'
+import { ScoreService } from '@quickDraw/core/score'
 
 @Component({
   standalone: true,

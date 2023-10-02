@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 // Spaces
-import { EPlayerSides, EPlayerStatuses, TPlayerSide, TPlayerStatus } from '../core.models'
+import { EPlayerSides, EPlayerStatuses, TPlayerSide, TPlayerStatus } from '@quickDraw/core/core.models'
 
 @Injectable({
   providedIn: 'root'
