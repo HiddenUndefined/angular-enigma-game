@@ -13,13 +13,6 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  & .control {
-    gap: 12px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: stretch;
-  }
   & .rows {
     gap: 12px;
     display: flex;

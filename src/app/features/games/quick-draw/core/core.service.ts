@@ -1,176 +1,60 @@
 import { Injectable, Input } from '@angular/core'
-import {
-  EGameStatus, EGridCellStatus,
-  ICell,
-  IGridSize,
-  TGameStatus,
-  TGridCellStatus
-} from '@features/games/quick-draw/core/core.models'
+// Models
+import { IGridSize } from './core.models'
+// Services
+import { StatusesService } from './statuses/statuses.service'
+import { GridAreaService } from './grid-area/grid-area.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuickDrawCoreService {
   /**
-   * Grid size with default values
-   * @private
-   */
-  @Input() gridSize: IGridSize = {
-    rows: 10,
-    cols: 10
-  }
-  @Input() timerDelay = 5000 // ms
-
-  /**
-   * Game statuses
-   */
-  gameStatus: TGameStatus = null
-
-  /**
-   * Game area grid
-   */
-  gameArea!: Array<Array<TGridCellStatus>>
-  activeCell!: ICell | null
-
-  /**
    * Timer ID for random select free cell in the grid and it's current value
    */
+  timerDelay = 5000 // ms
   timerId!: number
   timerValue!: number
 
+  constructor (
+    private areaService: GridAreaService,
+    private gameStatus: StatusesService
+  ) {
+  }
+
   // @Methods
-  /**
-   * Set cell status
-   * @param {number} x - cell position row index
-   * @param {number} y - cell position col index
-   * @param {TGridCellStatus} status - cell status
-   */
-  protected setCellStatus (x: number, y: number, status: TGridCellStatus): void {
-    // Clear timer
-    this.clearCounterTimer()
-
-    // Set active cell position in the grid
-    this.activeCell = { x, y }
-    // Set cell status
-    this.gameArea[ x ][ y ] = status
-
-    // Create timer
-    this.createCounterTimer()
-  }
-
-  /**
-   * Start the game
-   */
   startGame (): void {
-    this.gameStatus = EGameStatus.STARTED
+    this.gameStatus.setStarted()
 
-    this.selectActiveCell()
+    this.areaService.selectNextActiveCell()
   }
 
-  /**
-   * Stop the game
-   */
   continueGame (): void {
-    this.gameStatus = EGameStatus.STARTED
+    this.gameStatus.setStarted()
 
     this.createCounterTimer()
   }
 
-  /**
-   * Stop the game
-   */
   stopGame (): void {
-    this.gameStatus = EGameStatus.PAUSED
+    this.gameStatus.setPaused()
 
     this.stopCounterTimer()
   }
 
-  // Game status checkers
-  get gameIsStarted (): boolean {
-    return this.gameStatus === EGameStatus.STARTED
-  }
-  get gameIsPaused (): boolean {
-    return this.gameStatus === EGameStatus.PAUSED
-  }
-  get gameIsOver (): boolean {
-    return this.gameStatus === EGameStatus.OVER
+  endGame (): void {
+    this.gameStatus.setOver()
+
+    this.stopCounterTimer()
   }
 
-  /**
-   * Set win cell
-   */
-  setWinStatusToCell (x: number, y: number): void {
-    this.setCellStatus(x, y, EGridCellStatus.WIN)
-    this.activeCell = null
+  initGame (): void {
+    this.areaService.generateGrid()
   }
 
-  /**
-   * Generate game area grid
-   */
-  generateGrid (): void {
-    const grid = []
-
-    for (let i = 0; i < this.gridSize.rows; i++) {
-      const row = []
-      for (let j = 0; j < this.gridSize.cols; j++) {
-        row.push(null)
-      }
-
-      grid.push(row)
-    }
-
-    this.gameArea = grid
-  }
-
-  /**
-   * Select random cell in the grid
-   */
-  private selectRandomCell (): ICell {
-    const x = Math.floor(Math.random() * this.gridSize.rows)
-    const y = Math.floor(Math.random() * this.gridSize.cols)
-
-    return this.gameArea[ x ][ y ] === null ? { x, y } : this.selectRandomCell()
-  }
-
-  /**
-   * Select active cell in the grid
-   */
-  private selectActiveCell (): void {
-    // Make active cell lose
-    this.makeActiveCellLose()
-
-    if (!this.gameIsOver) {
-      // Select random cell
-      const { x, y } = this.selectRandomCell()
-
-      // Set timer value (in seconds)
-      this.setTimerValue()
-      // Change active cell status
-      this.setCellStatus(x, y, EGridCellStatus.ACTIVE)
-    }
-  }
-
-  /**
-   * Make active cell lose
-   */
-  private makeActiveCellLose (): void {
-    if (this.activeCell) {
-      const { x, y } = this.activeCell
-
-      this.setCellStatus(x, y, EGridCellStatus.LOSE)
-    }
-  }
-
-  /**
-   * Set up timer value
-   */
   private setTimerValue (): void {
     this.timerValue = this.timerDelay / 1000
   }
 
-  /**
-   * Clear timer
-   */
   private clearCounterTimer (): void {
     // Clear timer if exists
     clearTimeout(this.timerId)
@@ -178,17 +62,11 @@ export class QuickDrawCoreService {
     this.setTimerValue()
   }
 
-  /**
-   * Stop timer
-   */
   private stopCounterTimer (): void {
     // Clear timer if exists
     clearTimeout(this.timerId)
   }
 
-  /**
-   * Create timer
-   */
   private createCounterTimer (): void {
     // Clear timer if exists
     if (this.timerId) {
@@ -208,7 +86,7 @@ export class QuickDrawCoreService {
         this.createCounterTimer()
       }
       else {
-        this.selectActiveCell()
+        this.areaService.selectNextActiveCell()
       }
     }, 1000)
   }

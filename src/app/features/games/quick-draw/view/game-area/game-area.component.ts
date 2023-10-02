@@ -1,29 +1,26 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { NgClass, NgForOf, NgIf } from '@angular/common'
+// Global
 import { ButtonComponent } from '@components/atoms'
-import { QuickDrawCoreService } from '@features/games/quick-draw/core/core.service'
+// Spaces
+import { GridAreaService } from '../../core/grid-area'
 
 
 @Component({
   standalone: true,
-  selector: 'eg-quick-draw-game-area',
-  templateUrl: './game-area.component.html',
   imports: [
     NgForOf,
     NgClass,
     ButtonComponent,
     NgIf
   ],
+  selector: 'eg-quick-draw-game-area',
+  templateUrl: './game-area.component.html',
   styleUrls: ['./game-area.component.css']
 })
-export class GameAreaComponent implements OnInit {
+export class GameAreaComponent {
   constructor (
-    protected gameCore: QuickDrawCoreService
+    protected areaService: GridAreaService
   ) {
-  }
-
-  // @Lifecycle
-  ngOnInit (): void {
-    this.gameCore.generateGrid()
   }
 }

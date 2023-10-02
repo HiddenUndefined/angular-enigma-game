@@ -5,14 +5,26 @@ export enum EGridCellStatus {
   LOSE = 'lose'
 }
 export enum EGameStatus {
+  NOT_STARTED = 'not_started',
   STARTED = 'started',
   PAUSED = 'paused',
   OVER = 'over'
 }
+export enum EPlayerSides {
+  COMPUTER = 'computer',
+  PLAYER = 'player'
+}
+export enum EPlayerStatuses {
+  ACTIVE = 'active',
+  WIN = 'win',
+  LOSE = 'lose'
+}
 
 // Types
 export type TGridCellStatus = EGridCellStatus.ACTIVE | EGridCellStatus.WIN | EGridCellStatus.LOSE | null
-export type TGameStatus = EGameStatus.STARTED | EGameStatus.PAUSED | EGameStatus.OVER | null
+export type TGameStatus = EGameStatus.NOT_STARTED | EGameStatus.STARTED | EGameStatus.PAUSED | EGameStatus.OVER
+export type TPlayerSide = EPlayerSides.COMPUTER | EPlayerSides.PLAYER
+export type TPlayerStatus = EPlayerStatuses.ACTIVE | EPlayerStatuses.WIN | EPlayerStatuses.LOSE
 
 // Interfaces
 export interface IGridSize {
@@ -22,4 +34,8 @@ export interface IGridSize {
 export interface ICell {
   x: number
   y: number
+}
+export interface IScore {
+  [EPlayerSides.COMPUTER]: number
+  [EPlayerSides.PLAYER]: number
 }

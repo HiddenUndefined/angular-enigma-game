@@ -40,6 +40,8 @@
   --color-light-rgb: 248,249,250;
   --color-dark: #212529;
   --color-dark-rgb: 33,37,41;
+  /* For tags */
+  --color-body-background: #1e1e1e;
 }
 /* Reset */
 *,
@@ -58,5 +60,5 @@ body {
   line-height: 1.4;
   text-align: left;
   color: var(--color-light);
-  background-color: var(--color-dark);
+  background-color: var(--color-body-background);
 }
