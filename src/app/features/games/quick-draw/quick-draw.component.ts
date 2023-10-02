@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
-import { GameAreaComponent } from './components/game-area/game-area.component'
+import { QuickDrawCoreService } from './core/core.service'
+import { GameAreaComponent } from './view/game-area/game-area.component'
 
 @Component({
   standalone: true,
+  providers: [
+    QuickDrawCoreService
+  ],
   imports: [
     GameAreaComponent
   ],

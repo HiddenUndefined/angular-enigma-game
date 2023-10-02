@@ -1,0 +1,23 @@
+<strong>Timer: {{ gameCore.timerValue }} sec</strong>
+
+<div class="control">
+  <ng-container *ngIf="!gameCore.gameIsStarted; else playControlPanel">
+    <button eg-button (click)="gameCore.startGame()">Start</button>
+  </ng-container>
+  <ng-template #playControlPanel>
+    <button eg-button [disabled]="!gameCore.gameIsPaused" (click)="gameCore.continueGame()">Continue</button>
+    <button eg-button [disabled]="gameCore.gameIsPaused" (click)="gameCore.stopGame()">Stop</button>
+  </ng-template>
+</div>
+
+<div class="rows" *ngFor="let row of gameCore.gameArea; let rowIndex = index">
+  <button
+    class="cell"
+    *ngFor="let col of row; let colIndex = index"
+    (click)="gameCore.setWinStatusToCell(rowIndex, colIndex)"
+    [class]="gameCore.gameArea[rowIndex][colIndex]"
+    [disabled]="gameCore.gameArea[rowIndex][colIndex] !== 'active'"
+  >
+    {{ rowIndex }}:{{ colIndex }}
+  </button>
+</div>

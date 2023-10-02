@@ -1,9 +1,25 @@
+@keyframes activeCell {
+  0% {
+    background-color: rgba(var(--color-danger-rgb), 0);
+  }
+  100% {
+    background-color: rgba(var(--color-danger-rgb), 1);
+  }
+}
+
 :host {
   gap: 12px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
+  & .control {
+    gap: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+  }
   & .rows {
     gap: 12px;
     display: flex;
@@ -23,8 +39,12 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    &:disabled {
+      cursor: not-allowed;
+    }
     &.active {
       background-color: var(--color-primary);
+      animation: activeCell 5s linear;
     }
     &.win {
       background-color: var(--color-green);
