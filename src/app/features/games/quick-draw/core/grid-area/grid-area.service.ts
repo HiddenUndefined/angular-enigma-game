@@ -97,15 +97,14 @@ export class GridAreaService {
   }
 
   // TODO: It's boilerplate code. Refactor it.
-  private getRandomRows (array: any[], count: number): any[] {
+  private getRandomRows (array: number[], count: number): number[] {
     const random = this.getRandomArbitrary(0, this.gridSize.rows - 1)
 
     if (array.length < count && array.indexOf(random) === -1) array.push(random)
 
     return array.length === count ? array : this.getRandomRows(array, count)
   }
-
-  private getRandomCols (array: any[], count: number): any[] {
+  private getRandomCols (array: number[], count: number): number[] {
     const random = this.getRandomArbitrary(0, this.gridSize.cols - 1)
 
     if (array.length < count && array.indexOf(random) === -1) array.push(random)
