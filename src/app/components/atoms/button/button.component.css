@@ -25,4 +25,11 @@
     background-color: var(--color-gray);
     cursor: not-allowed;
   }
+  /* Styles */
+  &[btn-style='danger'] {
+    background-color: var(--color-danger);
+    &:focus-visible {
+      box-shadow: 0 0 0 4px rgba(var(--color-danger-rgb), 0.25);
+    }
+  }
 }
