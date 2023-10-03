@@ -15,8 +15,8 @@ export class GridAreaService {
   activeCell!: ICell | null
 
   // @Methods
-  setWinStatusToCell (x: number, y: number): void {
-    this.setCellStatus(x, y, EGridCellStatus.WIN)
+  setWinStatusToCell (position: ICell): void {
+    this.setCellStatus(position, EGridCellStatus.WIN)
     this.activeCell = null
   }
 
@@ -35,42 +35,81 @@ export class GridAreaService {
     this.gameArea = grid
   }
 
-  selectNextActiveCell (): void {
+  reset (): void {
+    this.activeCell = null
+
+    this.generateGrid()
+  }
+
+  randomSelectNextActiveCells (): void {
+    const countOfRandomCells = 7
+    const randomRows: number[] = []
+    this.getRandomRows(randomRows, countOfRandomCells)
+    const randomCols: number[] = []
+    this.getRandomCols(randomCols, countOfRandomCells)
+
+    // Cycle through count
+    for (let i = 0; i < countOfRandomCells; i++) {
+      // Check if cell is empty
+      if (this.gameArea[ randomRows[ i ] ][ randomCols[ i ] ] === null) {
+        this.setCellStatus({ x: randomRows[ i ], y: randomCols[ i ] }, EGridCellStatus.ACTIVE)
+      }
+    }
+  }
+
+  public selectNextActiveCell (): void {
     // Make active cell lose
     this.makeActiveCellLose()
 
     // Select random cell
-    const { x, y } = this.selectRandomCell()
+    this.randomSelectNextActiveCells()
+  }
 
-    // Change active cell status
-    this.setCellStatus(x, y, EGridCellStatus.ACTIVE)
+  public getCellStatus (position: ICell): TGridCellStatus {
+    return this.gameArea[ position.x ][ position.y ]
+  }
+
+  public checkCellIsActive (position: ICell): boolean {
+    return this.getCellStatus(position) === EGridCellStatus.ACTIVE
   }
 
   /**
    * Set cell status
-   * @param {number} x - cell position row index
-   * @param {number} y - cell position col index
+   * @param {ICell} position - cell position by row and col indexes
    * @param {TGridCellStatus} status - cell status
    */
-  protected setCellStatus (x: number, y: number, status: TGridCellStatus): void {
+  private setCellStatus (position: ICell, status: TGridCellStatus): void {
     // Set active cell position in the grid
-    this.activeCell = { x, y }
+    this.activeCell = position
     // Set cell status
-    this.gameArea[ x ][ y ] = status
-  }
-
-  private selectRandomCell (): ICell {
-    const x = Math.floor(Math.random() * this.gridSize.rows)
-    const y = Math.floor(Math.random() * this.gridSize.cols)
-
-    return this.gameArea[ x ][ y ] === null ? { x, y } : this.selectRandomCell()
+    this.gameArea[ position.x ][ position.y ] = status
   }
 
   private makeActiveCellLose (): void {
     if (this.activeCell) {
-      const { x, y } = this.activeCell
-
-      this.setCellStatus(x, y, EGridCellStatus.LOSE)
+      this.setCellStatus(this.activeCell, EGridCellStatus.LOSE)
     }
+  }
+
+  // Randomizers
+  private getRandomArbitrary (min: number, max: number): number {
+    return Math.round(Math.random() * (max - min) + min)
+  }
+
+  // TODO: It's boilerplate code. Refactor it.
+  private getRandomRows (array: any[], count: number): any[] {
+    const random = this.getRandomArbitrary(0, this.gridSize.rows - 1)
+
+    if (array.length < count && array.indexOf(random) === -1) array.push(random)
+
+    return array.length === count ? array : this.getRandomRows(array, count)
+  }
+
+  private getRandomCols (array: any[], count: number): any[] {
+    const random = this.getRandomArbitrary(0, this.gridSize.cols - 1)
+
+    if (array.length < count && array.indexOf(random) === -1) array.push(random)
+
+    return array.length === count ? array : this.getRandomCols(array, count)
   }
 }

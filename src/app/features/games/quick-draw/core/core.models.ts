@@ -16,6 +16,7 @@ export enum EPlayerSides {
 }
 export enum EPlayerStatuses {
   ACTIVE = 'active',
+  WAITING = 'waiting',
   WIN = 'win',
   LOSE = 'lose'
 }
@@ -23,8 +24,8 @@ export enum EPlayerStatuses {
 // Types
 export type TGridCellStatus = EGridCellStatus.ACTIVE | EGridCellStatus.WIN | EGridCellStatus.LOSE | null
 export type TGameStatus = EGameStatus.NOT_STARTED | EGameStatus.STARTED | EGameStatus.PAUSED | EGameStatus.OVER
-export type TPlayerSide = EPlayerSides.COMPUTER | EPlayerSides.PLAYER
-export type TPlayerStatus = EPlayerStatuses.ACTIVE | EPlayerStatuses.WIN | EPlayerStatuses.LOSE
+export type TPlayerSide = EPlayerSides.COMPUTER | EPlayerSides.PLAYER | null
+export type TPlayerStatus = EPlayerStatuses.ACTIVE | EPlayerStatuses.WAITING | EPlayerStatuses.WIN | EPlayerStatuses.LOSE
 
 // Interfaces
 export interface IGridSize {

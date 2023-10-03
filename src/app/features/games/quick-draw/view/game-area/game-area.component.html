@@ -2,10 +2,9 @@
   <button
     class="cell"
     *ngFor="let col of row; let colIndex = index"
-    (click)="areaService.setWinStatusToCell(rowIndex, colIndex)"
-    [class]="areaService.gameArea[rowIndex][colIndex]"
-    [disabled]="areaService.gameArea[rowIndex][colIndex] !== 'active'"
+    (click)="areaService.setWinStatusToCell({ x: rowIndex, y: colIndex })"
+    [class]="areaService.getCellStatus({ x: rowIndex, y: colIndex })"
+    [disabled]="!areaService.checkCellIsActive({ x: rowIndex, y: colIndex })"
   >
-    {{ rowIndex }}:{{ colIndex }}
   </button>
 </div>

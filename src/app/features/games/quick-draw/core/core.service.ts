@@ -2,21 +2,17 @@ import { Injectable } from '@angular/core'
 // Services
 import { StatusesService } from '@quickDraw/core/statuses'
 import { GridAreaService } from '@quickDraw/core/grid-area'
+import { ControlService } from '@quickDraw/core/control'
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuickDrawCoreService {
-  /**
-   * Timer ID for random select free cell in the grid and it's current value
-   */
-  timerDelay = 5000 // ms
-  timerId!: number
-  timerValue!: number
 
   constructor (
-    private areaService: GridAreaService,
-    private gameStatus: StatusesService
+    private area: GridAreaService,
+    private gameStatus: StatusesService,
+    private control: ControlService
   ) {
   }
 
@@ -24,68 +20,32 @@ export class QuickDrawCoreService {
   startGame (): void {
     this.gameStatus.setStarted()
 
-    this.areaService.selectNextActiveCell()
+    this.control.createCounterTimer()
+
+    this.area.selectNextActiveCell()
   }
 
   continueGame (): void {
     this.gameStatus.setStarted()
 
-    this.createCounterTimer()
+    this.control.createCounterTimer()
   }
 
   stopGame (): void {
     this.gameStatus.setPaused()
 
-    this.stopCounterTimer()
+    this.control.stopCounterTimer()
   }
 
-  endGame (): void {
-    this.gameStatus.setOver()
+  resetGame (): void {
+    this.gameStatus.resetStatus()
 
-    this.stopCounterTimer()
+    this.control.resetCounterTimer()
+
+    this.area.reset()
   }
 
   initGame (): void {
-    this.areaService.generateGrid()
-  }
-
-  private setTimerValue (): void {
-    this.timerValue = this.timerDelay / 1000
-  }
-
-  private clearCounterTimer (): void {
-    // Clear timer if exists
-    clearTimeout(this.timerId)
-    // Clear timer value
-    this.setTimerValue()
-  }
-
-  private stopCounterTimer (): void {
-    // Clear timer if exists
-    clearTimeout(this.timerId)
-  }
-
-  private createCounterTimer (): void {
-    // Clear timer if exists
-    if (this.timerId) {
-      clearTimeout(this.timerId)
-    }
-
-    // Set timer value (in seconds) if not exists
-    if (!this.timerValue) {
-      this.setTimerValue()
-    }
-
-    // Create timer with 1 sec delay
-    this.timerId = setTimeout(() => {
-      this.timerValue -= 1
-
-      if (this.timerValue > 0) {
-        this.createCounterTimer()
-      }
-      else {
-        this.areaService.selectNextActiveCell()
-      }
-    }, 1000)
+    this.area.generateGrid()
   }
 }
