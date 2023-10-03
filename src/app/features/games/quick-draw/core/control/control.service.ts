@@ -6,21 +6,8 @@ import { EPlayerSides, EPlayerStatuses, TPlayerSide, TPlayerStatus } from '@quic
   providedIn: 'root'
 })
 export class ControlService {
-  /**
-   * Timer ID for random select free cell in the grid and it's current value
-   */
-  counterTimerDuration = 5000 // ms
-  counterTimerId!: number
-  counterTimerValue!: number
-
   // Move side
-  public get isComputerMove (): boolean {
-    return this.moveSide === EPlayerSides.COMPUTER
-  }
-  public get isPlayerMove (): boolean {
-    return this.moveSide === EPlayerSides.PLAYER
-  }
-  private moveSide: TPlayerSide = null
+  private moveSide: TPlayerSide = EPlayerSides.COMPUTER
 
   // Game statuses
   public get getComputerGameStatus (): TPlayerStatus {
@@ -49,44 +36,5 @@ export class ControlService {
       default:
         this.moveSide = null
     }
-  }
-
-  public resetCounterTimer (): void {
-    // Clear timer if exists
-    clearTimeout(this.counterTimerId)
-    // Clear timer value
-    this.setTimerValue()
-  }
-
-  public stopCounterTimer (): void {
-    // Clear timer if exists
-    clearTimeout(this.counterTimerId)
-  }
-
-  public createCounterTimer (): void {
-    // Clear timer if exists
-    if (this.counterTimerId) {
-      clearTimeout(this.counterTimerId)
-    }
-
-    // Set timer value (in seconds) if not exists
-    if (!this.counterTimerValue) {
-      this.setTimerValue()
-    }
-
-    // Create timer with 1 sec delay
-    this.counterTimerId = setTimeout(() => {
-
-      if (this.counterTimerValue > 0) {
-        this.counterTimerValue -= 1
-        this.createCounterTimer()
-      }
-
-      console.log(this.counterTimerValue)
-    }, 1000)
-  }
-
-  private setTimerValue (): void {
-    this.counterTimerValue = this.counterTimerDuration / 1000
   }
 }

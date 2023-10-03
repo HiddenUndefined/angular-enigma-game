@@ -6,23 +6,20 @@ import { EGameStatus, TGameStatus } from '@quickDraw/core/core.models'
 })
 export class StatusesService {
   // Game status checkers
-  get status (): TGameStatus {
-    return this._status
-  }
   get isNotStarted (): boolean {
-    return this._status === EGameStatus.NOT_STARTED
+    return this.status === EGameStatus.NOT_STARTED
   }
   get isStarted (): boolean {
-    return this._status === EGameStatus.STARTED
+    return this.status === EGameStatus.STARTED
   }
   get isPaused (): boolean {
-    return this._status === EGameStatus.PAUSED
+    return this.status === EGameStatus.PAUSED
   }
   get isOver (): boolean {
-    return this._status === EGameStatus.OVER
+    return this.status === EGameStatus.OVER
   }
   // Encapsulated value
-  private _status: TGameStatus = EGameStatus.NOT_STARTED
+  private status: TGameStatus = EGameStatus.NOT_STARTED
 
   // @Methods
   public setStarted (): void {
@@ -43,6 +40,6 @@ export class StatusesService {
    * @param status {TGameStatus} - Game status
    */
   private setStatus (status: TGameStatus): void {
-    this._status = status
+    this.status = status
   }
 }

@@ -12,19 +12,25 @@ export class GridAreaService {
 
   gameArea!: Array<Array<TGridCellStatus>>
 
-  activeCell!: ICell | null
+  /** The collection of active cells with position {x, y} values */
+  activeCells: Array<ICell> = new Array<ICell>()
 
   // @Methods
-  setWinStatusToCell (position: ICell): void {
+  public setWinStatusToCell (position: ICell): void {
+    // Set cell status
     this.setCellStatus(position, EGridCellStatus.WIN)
-    this.activeCell = null
+
+    // Remove cell from active cells
+    this.activeCells.splice(this.activeCells.indexOf(position), 1)
   }
 
-  generateGrid (): void {
+  public generateGrid (): void {
     const grid = []
 
+    // Cycle through rows
     for (let i = 0; i < this.gridSize.rows; i++) {
       const row = []
+      // Cycle through cols
       for (let j = 0; j < this.gridSize.cols; j++) {
         row.push(null)
       }
@@ -32,16 +38,58 @@ export class GridAreaService {
       grid.push(row)
     }
 
+    // Set game area
     this.gameArea = grid
   }
 
-  reset (): void {
-    this.activeCell = null
+  public resetGrid (): void {
+    this.activeCells = []
 
     this.generateGrid()
   }
 
-  randomSelectNextActiveCells (): void {
+  public selectNextActiveCells (): void {
+    // Make active cell lose
+    this.makeActiveCellsLose()
+
+    // Select random cell
+    this.randomSelectNextActiveCells()
+  }
+
+  public getCellStatus (position: ICell): TGridCellStatus {
+    return this.gameArea[ position.x ][ position.y ]
+  }
+
+  public checkCellIsAvailableForPlayer (position: ICell): boolean {
+    return this.getCellStatus(position) === EGridCellStatus.ACTIVE && this.activeCells.indexOf(position) === -1
+  }
+
+  public checkActiveCellIsAvailable (): boolean {
+    return this.activeCells.length > 0
+  }
+
+  public makeActiveCellsLose (): void {
+    this.activeCells.forEach((cell) => {
+      this.setCellStatus(cell, EGridCellStatus.LOSE)
+    })
+  }
+
+  /**
+   * Set cell status
+   * @param {ICell} position - cell position by row and col indexes
+   * @param {TGridCellStatus} status - cell status
+   */
+  private setCellStatus (position: ICell, status: TGridCellStatus): void {
+    // Set cell status
+    this.gameArea[ position.x ][ position.y ] = status
+  }
+
+  private makeCellActive (position: ICell): void {
+    this.activeCells.push(position)
+    this.setCellStatus(position, EGridCellStatus.ACTIVE)
+  }
+
+  private randomSelectNextActiveCells (): void {
     const countOfRandomCells = 7
     const randomRows: number[] = []
     this.getRandomRows(randomRows, countOfRandomCells)
@@ -52,42 +100,8 @@ export class GridAreaService {
     for (let i = 0; i < countOfRandomCells; i++) {
       // Check if cell is empty
       if (this.gameArea[ randomRows[ i ] ][ randomCols[ i ] ] === null) {
-        this.setCellStatus({ x: randomRows[ i ], y: randomCols[ i ] }, EGridCellStatus.ACTIVE)
+        this.makeCellActive({ x: randomRows[ i ], y: randomCols[ i ] })
       }
-    }
-  }
-
-  public selectNextActiveCell (): void {
-    // Make active cell lose
-    this.makeActiveCellLose()
-
-    // Select random cell
-    this.randomSelectNextActiveCells()
-  }
-
-  public getCellStatus (position: ICell): TGridCellStatus {
-    return this.gameArea[ position.x ][ position.y ]
-  }
-
-  public checkCellIsActive (position: ICell): boolean {
-    return this.getCellStatus(position) === EGridCellStatus.ACTIVE
-  }
-
-  /**
-   * Set cell status
-   * @param {ICell} position - cell position by row and col indexes
-   * @param {TGridCellStatus} status - cell status
-   */
-  private setCellStatus (position: ICell, status: TGridCellStatus): void {
-    // Set active cell position in the grid
-    this.activeCell = position
-    // Set cell status
-    this.gameArea[ position.x ][ position.y ] = status
-  }
-
-  private makeActiveCellLose (): void {
-    if (this.activeCell) {
-      this.setCellStatus(this.activeCell, EGridCellStatus.LOSE)
     }
   }
 

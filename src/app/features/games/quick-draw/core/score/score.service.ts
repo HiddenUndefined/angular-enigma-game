@@ -17,4 +17,17 @@ export class ScoreService {
     [EPlayerSides.COMPUTER]: 10,
     [EPlayerSides.PLAYER]: 8
   }
+
+  // @Methods
+  public resetScore (): void {
+    this.score[EPlayerSides.COMPUTER] = 0
+    this.score[EPlayerSides.PLAYER] = 0
+  }
+
+  public setPointToComputer (): void {
+    this.score[EPlayerSides.COMPUTER]++
+  }
+  public setPointToPlayer (): void {
+    this.score[EPlayerSides.PLAYER]++
+  }
 }

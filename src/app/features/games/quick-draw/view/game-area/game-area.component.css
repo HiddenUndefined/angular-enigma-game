@@ -1,9 +1,9 @@
 @keyframes activeCell {
   0% {
-    background-color: rgba(var(--color-danger-rgb), 0);
+    background-color: rgba(var(--color-primary-rgb), 0);
   }
   100% {
-    background-color: rgba(var(--color-danger-rgb), 1);
+    background-color: rgba(var(--color-primary-rgb), 1);
   }
 }
 

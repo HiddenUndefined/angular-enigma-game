@@ -29,6 +29,13 @@
     &.active {
       background-color: var(--color-primary);
     }
+    &.waiting {
+      background-color: var(--color-yellow);
+      & span,
+      & strong {
+        color: var(--color-black);
+      }
+    }
     &.win {
       background-color: var(--color-green);
     }
