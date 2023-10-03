@@ -4,18 +4,40 @@ import { RouterModule, Routes } from '@angular/router'
 import { GamesLayoutComponent } from '@layouts/games'
 import { WebsiteLayoutComponent } from '@layouts/website'
 import { NotFoundLayoutComponent } from '@layouts/not-found'
+import { GameLayoutComponent } from '@layouts/game'
 // Pages
 import { NotFoundPageComponent } from '@pages/not-found'
+// Routes
+// import gameRouting from '@pages/game/game.routing'
 
+/**
+ * App routing
+ */
 const routes: Routes = [
-  // Game pages
+  // Games pages
   {
     path: 'games',
     component: GamesLayoutComponent,
     children: [
       {
         path: '',
-        loadChildren: () => import('@pages/games').then(m => m.GamesPageModule)
+        loadChildren: () => import('@pages/games').then(m => m.GamesPageRouting)
+      }
+    ]
+  },
+  // Game pages
+  // ...gameRouting,
+  {
+    path: 'game',
+    component: GameLayoutComponent,
+    children: [
+      {
+        path: 'quick-draw',
+        loadChildren: () => import('@pages/game/quick-draw').then(m => m.QuickDrawPageRouting)
+      },
+      {
+        path: 'tic-tac-toe',
+        loadChildren: () => import('@pages/game/tic-tac-toe').then(m => m.TicTacToePageRouting)
       }
     ]
   },

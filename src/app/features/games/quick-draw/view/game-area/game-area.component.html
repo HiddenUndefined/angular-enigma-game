@@ -1,0 +1,10 @@
+<div class="rows" *ngFor="let row of areaService.gameArea; let rowIndex = index">
+  <button
+    class="cell"
+    *ngFor="let col of row; let colIndex = index"
+    (click)="areaService.setWinStatusToCell({ x: rowIndex, y: colIndex })"
+    [class]="areaService.getCellStatus({ x: rowIndex, y: colIndex })"
+    [disabled]="!areaService.checkCellIsAvailableForPlayer({ x: rowIndex, y: colIndex })"
+  >
+  </button>
+</div>

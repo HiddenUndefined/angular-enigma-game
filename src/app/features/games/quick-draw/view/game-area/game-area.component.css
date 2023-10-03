@@ -1,0 +1,49 @@
+@keyframes activeCell {
+  0% {
+    background-color: rgba(var(--color-primary-rgb), 0);
+  }
+  100% {
+    background-color: rgba(var(--color-primary-rgb), 1);
+  }
+}
+
+:host {
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  & .rows {
+    gap: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+  & .cell {
+    min-width: 32px;
+    max-width: 32px;
+    width: 100%;
+    min-height: 32px;
+    max-height: 32px;
+    height: 100%;
+    color: var(--color-white);
+    background-color: var(--color-gray);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    &:disabled {
+      cursor: not-allowed;
+    }
+    &.active {
+      background-color: var(--color-primary);
+      animation: activeCell 5s linear;
+    }
+    &.win {
+      background-color: var(--color-green);
+    }
+    &.lose {
+      background-color: var(--color-red);
+    }
+  }
+}

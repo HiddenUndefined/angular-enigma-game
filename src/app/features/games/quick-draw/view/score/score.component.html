@@ -1,0 +1,24 @@
+<!-- Computer -->
+<div class="player" [ngClass]="control.getComputerGameStatus">
+  <!-- Name -->
+  <span>Computer</span>
+  <!-- Score -->
+  <strong>{{ score.getComputerScore }}</strong>
+</div>
+
+<div class="separator"></div>
+
+<!-- Timer -->
+<div class="timer">
+  <span>{{ core.getTimerValue }}</span>
+</div>
+
+<div class="separator"></div>
+
+<!-- User -->
+<div class="player" [ngClass]="control.getPlayerGameStatus">
+  <!-- Name -->
+  <span>Player</span>
+  <!-- Score -->
+  <strong>{{ score.getPlayerScore }}</strong>
+</div>

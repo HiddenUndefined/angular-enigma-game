@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core'
 // Spaces
 import { GamesPageComponent } from './games.component'
-import { GamesPageRouting } from './games.routing'
+import { RouterLink } from '@angular/router'
 
 @NgModule({
+  imports: [
+    RouterLink
+  ],
   declarations: [
     GamesPageComponent
-  ],
-  imports: [
-    GamesPageRouting
   ]
 })
 export class GamesPageModule {
