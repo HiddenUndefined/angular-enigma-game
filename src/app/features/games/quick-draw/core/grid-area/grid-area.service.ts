@@ -21,7 +21,7 @@ export class GridAreaService {
     this.setCellStatus(position, EGridCellStatus.WIN)
 
     // Remove cell from active cells
-    this.activeCells.splice(this.activeCells.indexOf(position), 1)
+    this.activeCells = this.activeCells.filter(({ x, y }) => x !== position.x && y !== position.y)
   }
 
   public generateGrid (): void {
@@ -49,9 +49,6 @@ export class GridAreaService {
   }
 
   public selectNextActiveCells (): void {
-    // Make active cell lose
-    this.makeActiveCellsLose()
-
     // Select random cell
     this.randomSelectNextActiveCells()
   }
@@ -72,6 +69,7 @@ export class GridAreaService {
     this.activeCells.forEach((cell) => {
       this.setCellStatus(cell, EGridCellStatus.LOSE)
     })
+    this.activeCells = []
   }
 
   /**
