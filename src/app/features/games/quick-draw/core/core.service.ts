@@ -12,7 +12,7 @@ import { ScoreService } from '@quickDraw/core/score'
 export class QuickDrawCoreService {
   // @Properties
   // Round
-  private roundTimerDuration = 3000 // ms
+  private roundTimerDuration = 8000 // ms
 
   public get getTimerValue (): number {
     return this.roundTimerValue
@@ -128,6 +128,7 @@ export class QuickDrawCoreService {
         }
 
         this.control.toggleMoveSide()
+        this.createComputerTimer()
       }
     })
   }
