@@ -6,6 +6,7 @@ import { WebsiteLayoutComponent } from './website'
 import { GamesLayoutComponent } from './games'
 import { GameLayoutComponent } from '@layouts/game'
 import { OrganismHeaderComponent } from '@components/organisms'
+import { OrganismGameHeaderComponent } from '@components/organisms/game-header'
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { OrganismHeaderComponent } from '@components/organisms'
   ],
   imports: [
     RouterModule,
-    OrganismHeaderComponent
+    OrganismHeaderComponent,
+    OrganismGameHeaderComponent
   ]
 })
 export class LayoutsModule {

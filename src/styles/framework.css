@@ -32,6 +32,9 @@
 .ai-center {
   align-items: center
 }
+.ai-stretch {
+  align-items: stretch
+}
 .ai-end {
   align-items: flex-end
 }
