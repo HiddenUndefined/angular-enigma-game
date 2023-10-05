@@ -2,17 +2,14 @@ import { Component, HostBinding } from '@angular/core'
 import { RouterLink, RouterLinkActive } from '@angular/router'
 // Global
 import { environment } from '@env/environment'
-import { CvIconComponent, GithubIconComponent, DjinniIconComponent, LinkedinIconComponent } from '@components/atoms/svg-icons'
+import { SocialLinksComponent } from '@components/molecules/social-links/social-links.component'
 
 @Component({
   standalone: true,
   imports: [
-    GithubIconComponent,
-    LinkedinIconComponent,
-    DjinniIconComponent,
-    CvIconComponent,
     RouterLinkActive,
-    RouterLink
+    RouterLink,
+    SocialLinksComponent
   ],
   selector: 'eg-organism-header',
   templateUrl: './header.component.html',
