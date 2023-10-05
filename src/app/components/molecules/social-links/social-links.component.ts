@@ -20,7 +20,7 @@ import {
   templateUrl: './social-links.component.html',
   styleUrls: ['./social-links.component.css']
 })
-export class SocialLinksComponent {
+export class MoleculeSocialLinksComponent {
   // @Host
   @HostBinding('class') class = 'd-flex fd-row jc-start ai-center fx-wrap'
 

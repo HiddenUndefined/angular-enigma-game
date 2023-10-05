@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { NgIf } from '@angular/common'
 // Global
-import { ButtonComponent } from '@components/atoms'
+import { AtomButtonComponent } from '@components/atoms'
 // Spaces
 import { QuickDrawCoreService } from '@quickDraw/core/core.service'
 import { ControlService } from '@quickDraw/core/control'
@@ -10,7 +10,7 @@ import { StatusesService } from '@quickDraw/core/statuses'
 @Component({
   standalone: true,
   imports: [
-    ButtonComponent,
+    AtomButtonComponent,
     NgIf
   ],
   selector: 'eg-quick-draw-control',

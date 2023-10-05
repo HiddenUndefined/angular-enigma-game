@@ -5,7 +5,7 @@ import { NotFoundLayoutComponent } from './not-found'
 import { WebsiteLayoutComponent } from './website'
 import { GamesLayoutComponent } from './games'
 import { GameLayoutComponent } from '@layouts/game'
-import { HeaderComponent } from '@components/organisms'
+import { OrganismHeaderComponent } from '@components/organisms'
 
 @NgModule({
   declarations: [
@@ -16,7 +16,7 @@ import { HeaderComponent } from '@components/organisms'
   ],
   imports: [
     RouterModule,
-    HeaderComponent
+    OrganismHeaderComponent
   ]
 })
 export class LayoutsModule {
