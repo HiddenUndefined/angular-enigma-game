@@ -3,23 +3,9 @@
   gap: 12px;
   padding: 12px;
   border-bottom: 1px solid var(--color-gray);
-  display: flex;
-  justify-content: center;
   .content-wrapper {
-    max-width: var(--content-max-width);
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
     .navigation {
       gap: 12px;
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      align-items: center;
-      flex-wrap: wrap;
       .link {
         color: var(--color-gray);
         font-size: 14px;
@@ -36,11 +22,6 @@
     }
     .social-links {
       gap: 8px;
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      align-items: center;
-      flex-wrap: wrap;
     }
   }
 }

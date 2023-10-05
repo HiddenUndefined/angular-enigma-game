@@ -25,7 +25,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles/_vars.css",
+              "src/styles/reset.css",
+              "src/styles/framework.css"
             ],
             "scripts": []
           },
@@ -93,7 +95,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles/_vars.css",
+              "src/styles/reset.css",
+              "src/styles/framework.css"
             ],
             "scripts": []
           }

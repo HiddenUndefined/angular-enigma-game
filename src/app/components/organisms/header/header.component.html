@@ -1,15 +1,15 @@
-<div class="content-wrapper">
+<div class="content-wrapper d-flex jc-sb ai-center fx-wrap">
   <!-- Logotype -->
   <h1 class="logotype">{{ env.appInfo.name }}</h1>
 
   <!-- Nav Links -->
-  <nav class="navigation">
+  <nav class="navigation d-flex fd-row jc-start ai-center fx-wrap">
     <a class="link" routerLink="/home" routerLinkActive="active">Home</a>
     <a class="link" routerLink="/games" routerLinkActive="active">Games</a>
   </nav>
 
   <!-- Social Links -->
-  <div class="social-links">
+  <div class="social-links d-flex fd-row jc-start ai-center fx-wrap">
     <a [href]="env.contacts.github" target="_blank" class="link">
       <eg-icon-github />
     </a>

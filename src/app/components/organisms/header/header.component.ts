@@ -1,8 +1,8 @@
-import { Component } from '@angular/core'
+import { Component, HostBinding } from '@angular/core'
+import { RouterLink, RouterLinkActive } from '@angular/router'
 // Global
 import { environment } from '@env/environment'
 import { CvIconComponent, GithubIconComponent, DjinniIconComponent, LinkedinIconComponent } from '@components/atoms/svg-icons'
-import { RouterLink, RouterLinkActive } from '@angular/router'
 
 @Component({
   standalone: true,
@@ -19,6 +19,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router'
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  // @Host
+  @HostBinding('class') class = 'd-flex jc-center'
+
   // @Properties
   env = environment
 }
