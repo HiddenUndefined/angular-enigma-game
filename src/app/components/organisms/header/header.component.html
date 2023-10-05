@@ -1,0 +1,26 @@
+<div class="content-wrapper">
+  <!-- Logotype -->
+  <h1 class="logotype">{{ env.appInfo.name }}</h1>
+
+  <!-- Nav Links -->
+  <nav class="navigation">
+    <a class="link" routerLink="/home" routerLinkActive="active">Home</a>
+    <a class="link" routerLink="/games" routerLinkActive="active">Games</a>
+  </nav>
+
+  <!-- Social Links -->
+  <div class="social-links">
+    <a [href]="env.contacts.github" target="_blank" class="link">
+      <eg-icon-github />
+    </a>
+    <a [href]="env.contacts.linkedin" target="_blank" class="link">
+      <eg-icon-linkedin />
+    </a>
+    <a [href]="env.contacts.djinni" target="_blank" class="link">
+      <eg-icon-djinni />
+    </a>
+    <a [href]="env.contacts.cv" target="_blank" class="link">
+      <eg-icon-cv />
+    </a>
+  </div>
+</div>
