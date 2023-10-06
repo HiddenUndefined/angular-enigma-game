@@ -9,7 +9,7 @@
   .icon,
   .icon svg {
     width: auto;
-    height: var(--link-size);
+    height: auto;
     display: flex;
     fill: var(--color-gray);
   }

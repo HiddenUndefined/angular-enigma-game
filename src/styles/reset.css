@@ -17,3 +17,21 @@ body {
   color: var(--color-light);
   background-color: var(--color-body-background);
 }
+/* Links & Buttons */
+a {
+  text-decoration: none;
+  color: var(--color-light);
+}
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+a[disabled],
+button[disabled] {
+  cursor: not-allowed;
+}
+/* SVG */
+svg {
+  fill: var(--color-white);
+}
