@@ -1,0 +1,5 @@
+/* Wrapper: Content */
+.content-wrapper {
+  max-width: var(--content-max-width);
+  width: 100%;
+}

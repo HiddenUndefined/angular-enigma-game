@@ -1,11 +1,10 @@
 import { Component, HostBinding } from '@angular/core'
-import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router'
 
 @Component({
-  selector: 'eg-molecule-main-navigation',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive],
+  selector: 'eg-molecule-main-navigation',
   templateUrl: './main-navigation.component.html',
   styleUrls: ['./main-navigation.component.css']
 })
