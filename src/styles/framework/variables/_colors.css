@@ -1,4 +1,3 @@
-/* Root styles */
 /* Thanks to Bootstrap */
 :root {
   --color-blue: #0d6efd;
@@ -42,23 +41,4 @@
   --color-dark-rgb: 33,37,41;
   /* For tags */
   --color-body-background: #1e1e1e;
-}
-/* Reset */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-* {
-  margin: 0;
-  padding: 0;
-}
-body {
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.4;
-  text-align: left;
-  color: var(--color-light);
-  background-color: var(--color-body-background);
 }

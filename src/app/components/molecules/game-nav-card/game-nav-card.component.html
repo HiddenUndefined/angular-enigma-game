@@ -1,0 +1,6 @@
+<small *ngIf="isComingSoon" class="coming-soon">Coming Soon</small>
+
+<strong class="header">{{ header }}</strong>
+<p class="description">{{ description }}</p>
+
+<a class="link" *ngIf="link && linkText" [routerLink]="link">{{ linkText }}</a>

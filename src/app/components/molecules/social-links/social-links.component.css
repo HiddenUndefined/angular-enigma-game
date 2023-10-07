@@ -1,0 +1,16 @@
+:host {
+  height: 24px;
+  gap: 8px;
+  .link {
+    width: 24px;
+    height: 24px;
+    .icon {
+      width: 24px;
+      height: 24px;
+      fill: var(--color-gray);
+    }
+    &:hover .icon {
+      fill: var(--color-white)
+    }
+  }
+}

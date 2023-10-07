@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { NgClass, NgForOf, NgIf } from '@angular/common'
 // Global
-import { ButtonComponent } from '@components/atoms'
+import { AtomButtonComponent } from '@components/atoms'
 // Spaces
 import { GridAreaService } from '@quickDraw/core/grid-area'
 
@@ -11,7 +11,7 @@ import { GridAreaService } from '@quickDraw/core/grid-area'
   imports: [
     NgForOf,
     NgClass,
-    ButtonComponent,
+    AtomButtonComponent,
     NgIf
   ],
   selector: 'eg-quick-draw-game-area',

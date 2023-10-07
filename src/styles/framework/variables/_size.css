@@ -1,0 +1,6 @@
+:root {
+  /* Width & Height */
+  --content-max-width: 1080px;
+  /* Margin, Padding, Gap */
+  --content-padding: 24px 12px;
+}

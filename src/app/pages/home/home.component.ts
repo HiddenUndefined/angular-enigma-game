@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, HostBinding } from '@angular/core'
 
 @Component({
   selector: 'eg-home-page',
@@ -6,4 +6,6 @@ import { Component } from '@angular/core'
   styleUrls: ['home.component.css']
 })
 export class HomePageComponent {
+  // @Host
+  @HostBinding('class') classes = 'd-flex fd-column ai-stretch jc-start'
 }

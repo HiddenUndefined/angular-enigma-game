@@ -1,0 +1,32 @@
+.link {
+  --link-size: 14px;
+
+  gap: 4px;
+  font-size: var(--link-size);
+  text-decoration: none;
+  color: var(--color-gray);
+  transition: all 0.2s ease-in-out;
+  .icon,
+  .icon svg {
+    width: auto;
+    height: auto;
+    display: flex;
+    fill: var(--color-gray);
+  }
+  /* Hover */
+  &:hover {
+    color: var(--color-primary);
+    .icon,
+    .icon svg {
+      fill: var(--color-primary);
+    }
+  }
+  /* Variants */
+  &.colored {
+    color: var(--color-primary);
+    /* Hover */
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

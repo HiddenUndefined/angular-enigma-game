@@ -121,20 +121,29 @@ export class QuickDrawCoreService {
     this.playerMoveSubscription$ = this.playerMove$.subscribe({
       complete: () => {
         if (this.area.checkActiveCellIsAvailable()) {
-          this.area.makeActiveCellsLose()
+          this.area.setLoseStatusToAllActiveCells()
           this.score.setPointToComputer()
         } else {
           this.score.setPointToPlayer()
         }
 
         this.control.toggleMoveSide()
-        this.createComputerTimer()
+        this.makeRound()
       }
     })
   }
 
   // Round
   private makeRound (): void {
-    this.createComputerTimer()
+    if (!this.nextRoundIsValid()) {
+      this.stopGame()
+    }
+    else {
+      this.createComputerTimer()
+    }
+  }
+
+  private nextRoundIsValid (): boolean {
+    return this.area.getCountOfEmptyCells() > 0
   }
 }
