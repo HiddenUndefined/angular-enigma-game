@@ -6,11 +6,16 @@ import { EGridCellStatus, ICell, IGridSize, TGridCellStatus } from '@quickDraw/c
 })
 export class GridAreaService {
   // @Properties
+  gameOptions = {
+    countOfActiveCells: 7
+  }
+
   /** Grid size (rows and cols count) */
   gridSize: IGridSize = {
     rows: 10,
     cols: 10
   }
+
   /** Game area */
   gameArea: Array<Array<TGridCellStatus>> = []
 
@@ -41,8 +46,29 @@ export class GridAreaService {
 
   /** Active cells generator */
   public selectNextActiveCells (): void {
+    // Count of empty cells
+    const countOfEmptyCells = this.getCountOfEmptyCells()
+
     // Select random cell
-    this.randomSelectNextActiveCells()
+    this.randomSelectNextActiveCells(
+      countOfEmptyCells > this.gameOptions.countOfActiveCells
+        ? this.gameOptions.countOfActiveCells
+        : countOfEmptyCells
+    )
+  }
+
+  public getCountOfEmptyCells (): number {
+    let emptyCellsCount = 0
+
+    for (let i = 0, rowCount = this.gameArea.length; i < rowCount; i++) {
+      for (let j = 0, cellCountInRow = this.gameArea[ i ].length; j < cellCountInRow; j++) {
+        if (this.gameArea[ i ][ j ] === null) {
+          emptyCellsCount += 1
+        }
+      }
+    }
+
+    return emptyCellsCount
   }
 
   /**
@@ -62,10 +88,6 @@ export class GridAreaService {
     return this.gameArea[ position.x ][ position.y ] === EGridCellStatus.ACTIVE
   }
 
-  /**
-   * Check if active cell is available
-   * @returns {boolean}
-   */
   public checkActiveCellIsAvailable (): boolean {
     let hasActiveCell = false
 
@@ -79,6 +101,16 @@ export class GridAreaService {
       }
     }
     return hasActiveCell
+  }
+
+  public setLoseStatusToAllActiveCells (): void {
+    for (let i = 0, rowCount = this.gameArea.length; i < rowCount; i++) {
+      for (let j = 0, cellCountInRow = this.gameArea[ i ].length; j < cellCountInRow; j++) {
+        if (this.gameArea[ i ][ j ] === EGridCellStatus.ACTIVE) {
+          this.setCellStatus({ x: i, y: j }, EGridCellStatus.LOSE)
+        }
+      }
+    }
   }
 
   /**
@@ -100,59 +132,23 @@ export class GridAreaService {
     this.setCellStatus(position, EGridCellStatus.ACTIVE)
   }
 
-  /**
-   * Change all cells with «active» statue to «lose»
-   */
-  public makeActiveCellsLose (): void {
-    for (let i = 0, rowCount = this.gameArea.length; i < rowCount; i++) {
-      for (let j = 0, cellCountInRow = this.gameArea[ i ].length; j < cellCountInRow; j++) {
-        if (this.gameArea[ i ][ j ] === EGridCellStatus.ACTIVE) {
-          this.setCellStatus({ x: i, y: j }, EGridCellStatus.LOSE)
-        }
-      }
-    }
-  }
-
-  /**
-   * Randomly select next active cells
-   * @TODO It's a temporary solution. Refactor it.
-   *       Need more flexibility with `countOfRandomCells`, as the count can be less then *7* if more cells in the grid are active.
-   * @private
-   */
-  private randomSelectNextActiveCells (): void {
-    const countOfRandomCells = 7
-    const randomRows: number[] = []
-    this.getRandomRows(randomRows, countOfRandomCells)
-    const randomCols: number[] = []
-    this.getRandomCols(randomCols, countOfRandomCells)
+  private randomSelectNextActiveCells (countOfRandomCells: number): void {
+    const { x, y } = this.getRandomCellPosition()
 
     // Cycle through count
-    for (let i = 0; i < countOfRandomCells; i++) {
-      // Check if cell is empty
-      if (this.gameArea[ randomRows[ i ] ][ randomCols[ i ] ] === null) {
-        this.makeCellActive({ x: randomRows[ i ], y: randomCols[ i ] })
-      }
+    if (this.gameArea[ x ][ y ] === null) {
+      this.makeCellActive({ x, y })
+      countOfRandomCells -= 1
+    }
+    if (countOfRandomCells > 0) {
+      this.randomSelectNextActiveCells(countOfRandomCells)
     }
   }
 
-  // Randomizers
-  private getRandomArbitrary (min: number, max: number): number {
-    return Math.round(Math.random() * (max - min) + min)
-  }
+  private getRandomCellPosition (): ICell {
+    const row = Math.floor(Math.random() * this.gameArea.length)
+    const col = Math.floor(Math.random() * this.gameArea[ row ].length)
 
-  // TODO: It's boilerplate code. Refactor it.
-  private getRandomRows (array: number[], count: number): number[] {
-    const random = this.getRandomArbitrary(0, this.gridSize.rows - 1)
-
-    if (array.length < count && array.indexOf(random) === -1) array.push(random)
-
-    return array.length === count ? array : this.getRandomRows(array, count)
-  }
-  private getRandomCols (array: number[], count: number): number[] {
-    const random = this.getRandomArbitrary(0, this.gridSize.cols - 1)
-
-    if (array.length < count && array.indexOf(random) === -1) array.push(random)
-
-    return array.length === count ? array : this.getRandomCols(array, count)
+    return { x: row, y: col }
   }
 }
