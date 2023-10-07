@@ -1,0 +1,101 @@
+@keyframes axisAnimation {
+  0% {
+    top: -10vh;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+:host {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  .bg-line {
+    width: 1px;
+    height: 100%;
+    background-color: var(--color-gray-700);
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    /* Animation element */
+    &:before {
+      content: '';
+      width: 1px;
+      height: 10vh;
+      background: linear-gradient(to bottom, var(--color-gray-700), var(--color-gray-500));
+      animation: axisAnimation 2.5s ease-in-out infinite;
+      position: absolute;
+      top: -10vh;
+    }
+    /* By sorted num */
+    &:nth-child(1) {
+      left: 0;
+      &:before {
+        animation-delay: 0.3s;
+        animation-duration: 8.3s
+      }
+    }
+    &:nth-child(2) {
+      display: none;
+      &:before {
+        animation-delay: 0.5s;
+        animation-duration: 2.5s
+      }
+    }
+    &:nth-child(4) {
+      display: none;
+      &:before {
+        animation-delay: 0.8s;
+        animation-duration: 5.8s
+      }
+    }
+    &:nth-child(3) {
+      left: 50%;
+      &:before {
+        animation-delay: 0.4s;
+        animation-duration: 4.4s
+      }
+    }
+    &:nth-child(5) {
+      right: 0;
+      &:before {
+        animation-delay: 0.1s;
+        animation-duration: 6.1s
+      }
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .bg-line {
+      /* By sorted num */
+      &:nth-child(2) {
+        display: block;
+        left: 33%;
+      }
+      &:nth-child(3) {
+        display: block;
+        left: 66%;
+      }
+    }
+  }
+  @media screen and (min-width: 1080px) {
+    .bg-line {
+      /* By sorted num */
+      /* By sorted num */
+      &:nth-child(2) {
+        left: 25%;
+      }
+      &:nth-child(3) {
+        left: 50%;
+      }
+      &:nth-child(4) {
+        display: block;
+        right: 25%;
+      }
+    }
+  }
+}

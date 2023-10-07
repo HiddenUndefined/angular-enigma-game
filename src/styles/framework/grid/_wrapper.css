@@ -3,3 +3,9 @@
   max-width: var(--content-max-width);
   width: 100%;
 }
+
+@media screen and (min-width: 1480px) {
+  .content-wrapper {
+    max-width: 1480px;
+  }
+}
