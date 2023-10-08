@@ -14,6 +14,11 @@ export enum EPlayerSides {
   COMPUTER = 'computer',
   PLAYER = 'player'
 }
+export enum EWinnerSides {
+  COMPUTER = EPlayerSides.COMPUTER,
+  PLAYER = EPlayerSides.PLAYER,
+  BOTH = 'both'
+}
 export enum EPlayerStatuses {
   ACTIVE = 'active',
   WAITING = 'waiting',

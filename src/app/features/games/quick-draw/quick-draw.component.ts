@@ -4,6 +4,10 @@ import { QuickDrawCoreService } from '@quickDraw/core//core.service'
 import { GameAreaComponent } from '@quickDraw/view/game-area'
 import { ControlComponent } from '@quickDraw/view/control'
 import { ScoreComponent } from '@quickDraw/view/score'
+import { AtomButtonComponent } from '@components/atoms'
+import { NotificationComponent } from '@quickDraw/view/notification'
+import { NgIf } from '@angular/common'
+import { NotificationService } from '@quickDraw/core/notification'
 
 @Component({
   standalone: true,
@@ -13,7 +17,10 @@ import { ScoreComponent } from '@quickDraw/view/score'
   imports: [
     GameAreaComponent,
     ControlComponent,
-    ScoreComponent
+    ScoreComponent,
+    AtomButtonComponent,
+    NotificationComponent,
+    NgIf
   ],
   selector: 'eg-game-quick-draw-feature',
   templateUrl: './quick-draw.component.html',
@@ -25,6 +32,7 @@ export class QuickDrawComponent implements OnInit {
 
   // @Constructor
   constructor (
+    protected readonly notification: NotificationService,
     protected readonly core: QuickDrawCoreService
   ) {
   }

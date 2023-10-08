@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core'
 // Spaces
-import { EPlayerSides, IScore } from '@quickDraw/core/core.models'
+import { EPlayerSides, EWinnerSides, IScore } from '@quickDraw/core/core.models'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScoreService {
+  // @Properties
+  // Win condition
+  private winScore = 10
+
   // Score getters
   public get getComputerScore (): number {
     return this.score[EPlayerSides.COMPUTER]
@@ -29,5 +33,19 @@ export class ScoreService {
   }
   public setPointToPlayer (): void {
     this.score[EPlayerSides.PLAYER]++
+  }
+
+  public getWinner (): EWinnerSides | null {
+    if (this.score[EPlayerSides.COMPUTER] >= this.winScore) {
+      return EWinnerSides.COMPUTER
+    }
+    else if (this.score[EPlayerSides.PLAYER] >= this.winScore) {
+      return EWinnerSides.PLAYER
+    }
+    else if (this.score[EPlayerSides.PLAYER] === this.score[EPlayerSides.COMPUTER]) {
+      return EWinnerSides.BOTH
+    }
+
+    return null
   }
 }

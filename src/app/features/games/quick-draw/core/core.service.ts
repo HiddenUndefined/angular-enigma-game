@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core'
-import { Observable, Subscription, interval, map, takeWhile } from 'rxjs'
+import { interval, map, Observable, Subscription, takeWhile } from 'rxjs'
 // Services
 import { StatusesService } from '@quickDraw/core/statuses'
 import { GridAreaService } from '@quickDraw/core/grid-area'
 import { ControlService } from '@quickDraw/core/control'
 import { ScoreService } from '@quickDraw/core/score'
+import { EWinnerSides } from '@quickDraw/core/core.models'
+import { NotificationService } from '@quickDraw/core/notification'
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +29,7 @@ export class QuickDrawCoreService {
 
   // @Constructor
   constructor (
+    private notification: NotificationService,
     private area: GridAreaService,
     private gameStatus: StatusesService,
     private control: ControlService,
@@ -36,6 +39,8 @@ export class QuickDrawCoreService {
 
   // @Methods
   startGame (): void {
+    this.notification.setViewStatus(false)
+
     this.score.resetScore()
 
     this.gameStatus.setStarted()
@@ -46,10 +51,22 @@ export class QuickDrawCoreService {
   stopGame (): void {
     this.clearPlayerTimer()
 
+    this.notification.setNotification({
+      title: 'Game paused',
+      message: 'Do you want to continue?',
+      button: {
+        type: 'continue',
+        text: 'Continue'
+      }
+    })
+    this.notification.setViewStatus(true)
+
     this.gameStatus.setPaused()
   }
 
   continueGame (): void {
+    this.notification.setViewStatus(false)
+
     this.gameStatus.setStarted()
 
     this.createPlayerTimer()
@@ -57,9 +74,60 @@ export class QuickDrawCoreService {
 
   resetGame (): void {
     this.destroyGame()
+
+    this.initGame()
+  }
+
+  endGame (): void {
+    this.clearPlayerTimer()
+
+    this.gameStatus.setOver()
+
+    if (this.score.getWinner() === EWinnerSides.PLAYER) {
+      this.notification.setNotification({
+        title: 'You win',
+        message: 'Congratulations on your victory :)',
+        button: {
+          type: 'reset',
+          text: 'Play again'
+        }
+      })
+    }
+    else if (this.score.getWinner() === EWinnerSides.COMPUTER) {
+      this.notification.setNotification({
+        title: 'Game over',
+        message: 'Don\'t give up, try again :)',
+        button: {
+          type: 'reset',
+          text: 'Try again'
+        }
+      })
+    }
+    else if (this.score.getWinner() === EWinnerSides.BOTH) {
+      this.notification.setNotification({
+        title: 'Draw',
+        message: 'You are both strong :)',
+        button: {
+          type: 'reset',
+          text: 'Try again'
+        }
+      })
+    }
+
+    this.notification.setViewStatus(true)
   }
 
   initGame (): void {
+    this.notification.setNotification({
+      title: 'Quick draw',
+      message: 'Click on the blue cells as fast as you can!',
+      button: {
+        type: 'start',
+        text: 'Start game'
+      }
+    })
+    this.notification.setViewStatus(true)
+
     this.score.resetScore()
 
     this.area.generateGrid()
@@ -136,7 +204,7 @@ export class QuickDrawCoreService {
   // Round
   private makeRound (): void {
     if (!this.nextRoundIsValid()) {
-      this.stopGame()
+      this.endGame()
     }
     else {
       this.createComputerTimer()

@@ -1,5 +1,12 @@
-<eg-quick-draw-score />
+<div class="content-wrapper d-flex fd-column ai-center jc-center">
+  <eg-quick-draw-score />
 
-<eg-quick-draw-game-area />
+  <div class="game-area-wrapper">
+    <eg-quick-draw-notification *ngIf="notification.getViewStatus">
+    </eg-quick-draw-notification>
 
-<eg-quick-draw-control />
+    <eg-quick-draw-game-area />
+  </div>
+
+  <eg-quick-draw-control />
+</div>
