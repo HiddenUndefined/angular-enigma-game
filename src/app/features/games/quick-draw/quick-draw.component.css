@@ -1,7 +1,4 @@
 :host {
-  gap: 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  min-height: calc(100vh - 65px);
+  gap: 24px;
 }

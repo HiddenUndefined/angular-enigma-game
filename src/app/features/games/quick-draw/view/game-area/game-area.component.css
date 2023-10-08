@@ -1,12 +1,3 @@
-@keyframes activeCell {
-  0% {
-    background-color: rgba(var(--color-primary-rgb), 0);
-  }
-  100% {
-    background-color: rgba(var(--color-primary-rgb), 1);
-  }
-}
-
 :host {
   gap: 12px;
   display: flex;
@@ -32,12 +23,13 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    transition: all .25s ease-in-out;
     &:disabled {
+      opacity: 0.5;
       cursor: not-allowed;
     }
     &.active {
       background-color: var(--color-primary);
-      animation: activeCell 5s linear;
     }
     &.win {
       background-color: var(--color-green);

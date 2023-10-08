@@ -1,8 +1,12 @@
-<ng-container *ngIf="status.isNotStarted; else playControlPanel">
+<ng-container *ngIf="status.isNotStarted">
   <button eg-button (click)="core.startGame()">Start</button>
 </ng-container>
-<ng-template #playControlPanel>
-  <button eg-button [disabled]="status.isStarted" (click)="core.continueGame()">Continue</button>
-  <button eg-button [disabled]="status.isPaused" (click)="core.stopGame()">Stop</button>
+
+<ng-container *ngIf="status.isPaused">
+  <button eg-button (click)="core.continueGame()">Continue</button>
   <button eg-button colorType="danger" (click)="core.resetGame()">Reset</button>
-</ng-template>
+</ng-container>
+
+<ng-container *ngIf="status.isStarted">
+  <button eg-button (click)="core.stopGame()">Stop</button>
+</ng-container>

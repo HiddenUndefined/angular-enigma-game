@@ -44,7 +44,6 @@ export class GridAreaService {
     this.generateGrid()
   }
 
-  /** Active cells generator */
   public selectNextActiveCells (): void {
     // Count of empty cells
     const countOfEmptyCells = this.getCountOfEmptyCells()
@@ -71,19 +70,15 @@ export class GridAreaService {
     return emptyCellsCount
   }
 
-  /**
-   * Set cell status to «lose»
-   * @param position {ICell} - cell position by row and col indexes
-   */
-  public setWinStatusToCell (position: ICell): void {
-    this.setCellStatus(position, EGridCellStatus.WIN)
+  public playerSelectCell (position: ICell): void {
+    if (this.checkCellIsAvailableForPlayer(position)) {
+      this.setCellStatus(position, EGridCellStatus.WIN)
+    }
+    else {
+      this.setCellStatus(position, EGridCellStatus.LOSE)
+    }
   }
 
-  /**
-   * Check if cell is available for player
-   * @param position {ICell} - cell position by row and col indexes
-   * @returns {boolean}
-   */
   public checkCellIsAvailableForPlayer (position: ICell): boolean {
     return this.gameArea[ position.x ][ position.y ] === EGridCellStatus.ACTIVE
   }
@@ -111,6 +106,12 @@ export class GridAreaService {
         }
       }
     }
+  }
+
+  public isValidCellStatusForInteraction (position: ICell): boolean {
+    const cellStatus = this.gameArea[ position.x ][ position.y ]
+
+    return cellStatus === null || cellStatus === EGridCellStatus.ACTIVE
   }
 
   /**

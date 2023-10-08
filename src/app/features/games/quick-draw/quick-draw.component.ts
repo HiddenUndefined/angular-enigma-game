@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, HostBinding, OnInit } from '@angular/core'
 // Spaces
 import { QuickDrawCoreService } from '@quickDraw/core//core.service'
 import { GameAreaComponent } from '@quickDraw/view/game-area'
@@ -20,6 +20,10 @@ import { ScoreComponent } from '@quickDraw/view/score'
   styleUrls: ['./quick-draw.component.css']
 })
 export class QuickDrawComponent implements OnInit {
+  // @Host
+  @HostBinding('class') readonly classes = 'd-flex fd-column ai-center jc-center'
+
+  // @Constructor
   constructor (
     protected readonly core: QuickDrawCoreService
   ) {
