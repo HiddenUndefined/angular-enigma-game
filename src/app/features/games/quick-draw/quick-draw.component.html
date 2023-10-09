@@ -1,7 +1,27 @@
-<strong>Game: Quick Draw</strong>
+<div class="content-wrapper d-flex fd-column ai-center jc-center">
+  <ng-container *ngIf="core.gameNotStarted">
+    <eg-quick-draw-setup-manager
+      (startGame)="core.initGame()"
+    />
+  </ng-container>
 
-<eg-quick-draw-score />
+  <ng-container *ngIf="!core.gameNotStarted">
+    <eg-quick-draw-score
+      [gameStatus]="core.getGameStatus"
+      [round]="core.getGameRoundCount"
+      [livesCount]="core.getPlayerLivesCount"
+      [timerValue]="core.getTimerValue"
+    />
 
-<eg-quick-draw-game-area />
+    <div class="game-area-wrapper">
+      <eg-quick-draw-notification *ngIf="notification.getViewStatus">
+      </eg-quick-draw-notification>
 
-<eg-quick-draw-control />
+      <eg-quick-draw-game-area
+        (cellClickHandler)="core.cellClickHandler($event)"
+      />
+    </div>
+
+    <eg-quick-draw-control />
+  </ng-container>
+</div>

@@ -1,25 +1,38 @@
 import { Injectable } from '@angular/core'
-import { EGridCellStatus, ICell, IGridSize, TGridCellStatus } from '@quickDraw/core/core.models'
+// Global
+import { IGridSize, TGridCellStatus, EGridCellStatus, IGridCellPosition } from '@quickDraw/core/models/game-area.model'
 
 @Injectable({
   providedIn: 'root'
 })
 export class GridAreaService {
   // @Properties
-  gameOptions = {
-    countOfActiveCells: 7
-  }
+  private countOfActiveCells!: number
 
   /** Grid size (rows and cols count) */
-  gridSize: IGridSize = {
-    rows: 10,
-    cols: 10
-  }
+  private gridSize!: IGridSize
 
   /** Game area */
   gameArea: Array<Array<TGridCellStatus>> = []
 
   // @Methods
+
+  /**
+   * Set count of active cells
+   * @param {number} count - count of active cells
+   */
+  public setCountOfActiveCells (count: number): void {
+    this.countOfActiveCells = count
+  }
+
+  /**
+   * Set grid params
+   * @param {IGridSize} gridSize - grid size (rows and cols count)
+   */
+  public setGridParams (gridSize: IGridSize): void {
+    this.gridSize = gridSize
+  }
+
   /** Generate grid */
   public generateGrid (): void {
     const grid = []
@@ -44,15 +57,18 @@ export class GridAreaService {
     this.generateGrid()
   }
 
-  /** Active cells generator */
+  public getCellStatus (position: IGridCellPosition): TGridCellStatus {
+    return this.gameArea[ position.x ][ position.y ]
+  }
+
   public selectNextActiveCells (): void {
     // Count of empty cells
     const countOfEmptyCells = this.getCountOfEmptyCells()
 
     // Select random cell
     this.randomSelectNextActiveCells(
-      countOfEmptyCells > this.gameOptions.countOfActiveCells
-        ? this.gameOptions.countOfActiveCells
+      countOfEmptyCells > this.countOfActiveCells
+        ? this.countOfActiveCells
         : countOfEmptyCells
     )
   }
@@ -71,20 +87,16 @@ export class GridAreaService {
     return emptyCellsCount
   }
 
-  /**
-   * Set cell status to «lose»
-   * @param position {ICell} - cell position by row and col indexes
-   */
-  public setWinStatusToCell (position: ICell): void {
-    this.setCellStatus(position, EGridCellStatus.WIN)
+  public playerSelectCell (position: IGridCellPosition): void {
+    if (this.checkCellIsAvailableForPlayer(position)) {
+      this.setCellStatus(position, EGridCellStatus.WIN)
+    }
+    else {
+      this.setCellStatus(position, EGridCellStatus.LOSE)
+    }
   }
 
-  /**
-   * Check if cell is available for player
-   * @param position {ICell} - cell position by row and col indexes
-   * @returns {boolean}
-   */
-  public checkCellIsAvailableForPlayer (position: ICell): boolean {
+  public checkCellIsAvailableForPlayer (position: IGridCellPosition): boolean {
     return this.gameArea[ position.x ][ position.y ] === EGridCellStatus.ACTIVE
   }
 
@@ -113,12 +125,18 @@ export class GridAreaService {
     }
   }
 
+  public isValidCellStatusForInteraction (position: IGridCellPosition): boolean {
+    const cellStatus = this.gameArea[ position.x ][ position.y ]
+
+    return cellStatus === null || cellStatus === EGridCellStatus.ACTIVE
+  }
+
   /**
    * Set cell status
-   * @param {ICell} position - cell position by row and col indexes
+   * @param {IGridCellPosition} position - cell position by row and col indexes
    * @param {TGridCellStatus} status - cell status
    */
-  private setCellStatus (position: ICell, status: TGridCellStatus): void {
+  private setCellStatus (position: IGridCellPosition, status: TGridCellStatus): void {
     // Set cell status
     this.gameArea[ position.x ][ position.y ] = status
   }
@@ -128,7 +146,7 @@ export class GridAreaService {
    * @param position
    * @private
    */
-  private makeCellActive (position: ICell): void {
+  private makeCellActive (position: IGridCellPosition): void {
     this.setCellStatus(position, EGridCellStatus.ACTIVE)
   }
 
@@ -145,7 +163,7 @@ export class GridAreaService {
     }
   }
 
-  private getRandomCellPosition (): ICell {
+  private getRandomCellPosition (): IGridCellPosition {
     const row = Math.floor(Math.random() * this.gameArea.length)
     const col = Math.floor(Math.random() * this.gameArea[ row ].length)
 

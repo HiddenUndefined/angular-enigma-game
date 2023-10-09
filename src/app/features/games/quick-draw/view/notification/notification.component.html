@@ -1,0 +1,16 @@
+<strong class="header">{{ notification.title }}</strong>
+<p class="description">{{ notification.message }}</p>
+
+<ng-container *ngIf="notification.button">
+  <ng-container [ngSwitch]="notification.button.type">
+    <button *ngSwitchCase="'reset'" class="button" eg-button
+      (click)="core.resetGame()"
+    >{{ notification.button.text }}</button>
+    <button *ngSwitchCase="'start'" class="button" eg-button
+      (click)="core.startGame()"
+    >{{ notification.button.text }}</button>
+    <button *ngSwitchCase="'continue'" class="button" eg-button
+      (click)="core.continueGame()"
+    >{{ notification.button.text }}</button>
+  </ng-container>
+</ng-container>

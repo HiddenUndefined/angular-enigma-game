@@ -3,8 +3,8 @@
     class="cell"
     *ngFor="let cell of row; let colIndex = index"
     [class]="cell"
-    (click)="areaService.setWinStatusToCell({ x: rowIndex, y: colIndex })"
-    [disabled]="!areaService.checkCellIsAvailableForPlayer({ x: rowIndex, y: colIndex })"
+    (click)="selectCell({ x: rowIndex, y: colIndex })"
+    [disabled]="getDisabledCellStatus()"
   >
   </button>
 </div>

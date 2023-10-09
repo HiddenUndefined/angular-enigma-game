@@ -1,18 +1,36 @@
 import { Injectable } from '@angular/core'
-import { Observable, Subscription, interval, map, takeWhile } from 'rxjs'
+import { interval, map, Observable, Subscription, takeWhile } from 'rxjs'
 // Services
 import { StatusesService } from '@quickDraw/core/statuses'
 import { GridAreaService } from '@quickDraw/core/grid-area'
 import { ControlService } from '@quickDraw/core/control'
 import { ScoreService } from '@quickDraw/core/score'
+import { EWinnerSides } from '@quickDraw/core/core.models'
+import { NotificationService } from '@quickDraw/core/notification'
+import { SetupManagerService } from '@quickDraw/core/setup-manager'
+import {
+  computerWinNotification, drawNotification,
+  initGameNotification,
+  pauseGameNotification,
+  playerWinNotification
+} from '@quickDraw/core/notification/notification.collection'
+import { EGridCellStatus, IGridCellPosition } from '@quickDraw/core/models/game-area.model'
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuickDrawCoreService {
   // @Properties
+  // Player lives count
+  private playerLivesCount = 0
+
+  public get getPlayerLivesCount (): number {
+    return this.playerLivesCount
+  }
+
   // Round
-  private roundTimerDuration = 8000 // ms
+  private roundTimerDuration = 0
+  private roundCount = 0
 
   public get getTimerValue (): number {
     return this.roundTimerValue
@@ -25,8 +43,21 @@ export class QuickDrawCoreService {
   private playerMove$: Observable<void> = new Observable<void>()
   private playerMoveSubscription$: Subscription | null = null
 
+  // Game status
+  public get gameNotStarted (): boolean {
+    return this.gameStatus.isNotStarted
+  }
+  public get getGameStatus (): string {
+    return this.gameStatus.getGameStatusTitle
+  }
+  public get getGameRoundCount (): number {
+    return this.roundCount
+  }
+
   // @Constructor
   constructor (
+    private setup: SetupManagerService,
+    private notification: NotificationService,
     private area: GridAreaService,
     private gameStatus: StatusesService,
     private control: ControlService,
@@ -35,7 +66,9 @@ export class QuickDrawCoreService {
   }
 
   // @Methods
-  startGame (): void {
+  public startGame (): void {
+    this.notification.setViewStatus(false)
+
     this.score.resetScore()
 
     this.gameStatus.setStarted()
@@ -43,28 +76,92 @@ export class QuickDrawCoreService {
     this.makeRound()
   }
 
-  stopGame (): void {
+  public stopGame (): void {
     this.clearPlayerTimer()
+
+    this.notification.setNotification(pauseGameNotification)
+    this.notification.setViewStatus(true)
 
     this.gameStatus.setPaused()
   }
 
-  continueGame (): void {
+  public continueGame (): void {
+    this.notification.setViewStatus(false)
+
     this.gameStatus.setStarted()
 
     this.createPlayerTimer()
   }
 
-  resetGame (): void {
+  public resetGame (): void {
     this.destroyGame()
+
+    this.initGame()
   }
 
-  initGame (): void {
-    this.score.resetScore()
+  public endGame (): void {
+    this.clearPlayerTimer()
 
-    this.area.generateGrid()
+    this.gameStatus.setOver()
+
+    if (this.score.getWinner() === EWinnerSides.PLAYER) {
+      this.notification.setNotification(playerWinNotification)
+    }
+    else if (this.score.getWinner() === EWinnerSides.COMPUTER) {
+      this.notification.setNotification(computerWinNotification)
+    }
+    else if (this.score.getWinner() === EWinnerSides.DRAW) {
+      this.notification.setNotification(drawNotification)
+    }
+
+    this.notification.setViewStatus(true)
+  }
+
+  public exitGame (): void {
+    this.endGame()
 
     this.gameStatus.resetStatus()
+  }
+
+  public initGame (): void {
+    this.notification.setNotification(initGameNotification)
+    this.notification.setViewStatus(true)
+
+    this.area.setCountOfActiveCells(this.setup.getCurrentSetup.round.activationCellsCount)
+    this.area.setGridParams(this.setup.getCurrentSetup.gridSize)
+    this.area.generateGrid()
+
+    this.score.resetScore()
+    this.score.setWinScore(this.setup.getCurrentSetup.round.winScore)
+
+    this.roundTimerDuration = this.setup.getCurrentSetup.round.timerDuration * 1000 // format to ms
+    this.convertTimerDurationToPureValue()
+
+    this.playerLivesCount = this.setup.getCurrentSetup.extraLiveCount
+    this.roundCount = 0
+
+    this.gameStatus.setReady()
+  }
+
+  // Cell handler
+  public cellClickHandler (position: IGridCellPosition): void {
+    if (this.area.isValidCellStatusForInteraction(position)) {
+      this.area.playerSelectCell(position)
+
+      if (this.area.getCellStatus(position) === EGridCellStatus.LOSE) {
+        this.playerLiveDowngrade()
+      }
+    }
+  }
+
+  private playerLiveDowngrade (): void {
+    if (this.playerLivesCount === 0) {
+      this.score.setPointToComputer(this.setup.getCurrentSetup.round.winScore)
+      this.endGame()
+    }
+    else {
+      this.playerLivesCount -= 1
+    }
   }
 
   private convertTimerDurationToPureValue (): void {
@@ -80,6 +177,16 @@ export class QuickDrawCoreService {
     this.gameStatus.resetStatus()
 
     this.area.resetGrid()
+  }
+
+  // Point
+  private setPointToRoundWinner (): void {
+    if (this.area.checkActiveCellIsAvailable()) {
+      this.area.setLoseStatusToAllActiveCells()
+      this.score.setPointToComputer()
+    } else {
+      this.score.setPointToPlayer()
+    }
   }
 
   // Computer move timer
@@ -120,13 +227,7 @@ export class QuickDrawCoreService {
 
     this.playerMoveSubscription$ = this.playerMove$.subscribe({
       complete: () => {
-        if (this.area.checkActiveCellIsAvailable()) {
-          this.area.setLoseStatusToAllActiveCells()
-          this.score.setPointToComputer()
-        } else {
-          this.score.setPointToPlayer()
-        }
-
+        this.setPointToRoundWinner()
         this.control.toggleMoveSide()
         this.makeRound()
       }
@@ -136,14 +237,15 @@ export class QuickDrawCoreService {
   // Round
   private makeRound (): void {
     if (!this.nextRoundIsValid()) {
-      this.stopGame()
+      this.endGame()
     }
     else {
+      this.roundCount += 1
       this.createComputerTimer()
     }
   }
 
   private nextRoundIsValid (): boolean {
-    return this.area.getCountOfEmptyCells() > 0
+    return this.area.getCountOfEmptyCells() > 0 && !this.score.checkSomebodyWin()
   }
 }

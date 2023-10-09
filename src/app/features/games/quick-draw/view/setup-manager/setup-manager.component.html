@@ -1,0 +1,50 @@
+<div class="content-wrapper d-flex fd-column jc-start ai-center">
+  <div class="difficult-wrapper block-wrapper d-flex fd-column jc-center ai-center">
+    <strong class="title">Select game difficult:</strong>
+    <div class="buttons-wrapper d-flex fd-row jc-center ai-center">
+      <button
+        eg-button
+        *ngFor="let setup of manager.getAllSetups; let i = index"
+        (click)="manager.setCurrentSetupIndex(i)"
+        [colorType]="manager.getCurrentSetupIndex === i ? 'success' : 'secondary'"
+      >{{ setup.title }}</button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="manager.getCurrentSetup as setup">
+    <div class="selected-difficult block-wrapper d-flex fd-column jc-start ai-center">
+      <strong class="title">{{ setup.title }}</strong>
+      <p class="description">{{ setup.description }}</p>
+
+      <div class="params">
+        <div class="param">
+          <span class="label">Grid Size:</span>
+          <strong class="value">{{ setup.gridSize.rows }}x{{ setup.gridSize.rows }}</strong>
+        </div>
+        <div class="param">
+          <span class="label">Extra Life:</span>
+          <strong class="value">{{ setup.extraLiveCount }} lives</strong>
+        </div>
+        <div class="param">
+          <span class="label">Activated cells count:</span>
+          <strong class="value">{{ setup.round.activationCellsCount }} cells</strong>
+        </div>
+        <div class="param">
+          <span class="label">Round Duration:</span>
+          <strong class="value">{{ setup.round.timerDuration }} seconds</strong>
+        </div>
+        <div class="param">
+          <span class="label">Win score:</span>
+          <strong class="value">{{ setup.round.winScore }} points</strong>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="actions-wrapper block-wrapper d-flex fd-column jc-center ai-center">
+    <strong class="title">Ready to start the game?</strong>
+    <div class="buttons-wrapper d-flex fd-row jc-center ai-center">
+      <button eg-button (click)="startGameHandler()" [disabled]="!manager.getCurrentSetup">Yep, start!</button>
+    </div>
+  </div>
+</div>

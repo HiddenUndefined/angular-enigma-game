@@ -1,24 +1,39 @@
-<!-- Computer -->
-<div class="player" [ngClass]="control.getComputerGameStatus">
-  <!-- Name -->
-  <span>Computer</span>
-  <!-- Score -->
-  <strong>{{ score.getComputerScore }}</strong>
+<div class="header-wrapper d-flex fd-column jc-stretch ai-stretch">
+  <!-- Game Status -->
+  <div class="block status">
+    <span>{{ gameStatus }}</span>
+  </div>
+
+  <!-- Round -->
+  <div class="block round">
+    <span>Round №{{ round }}</span>
+  </div>
+
+  <!-- Round -->
+  <div class="block status">
+    <span>Extra live: {{ livesCount }}</span>
+  </div>
 </div>
 
-<div class="separator"></div>
+<div class="gamers-wrapper d-flex fd-column jc-stretch ai-stretch">
+  <!-- Computer -->
+  <div class="player" [ngClass]="control.getComputerGameStatus">
+    <!-- Name -->
+    <span>Computer</span>
+    <!-- Score -->
+    <strong>{{ score.getComputerScore }}</strong>
+  </div>
 
-<!-- Timer -->
-<div class="timer">
-  <span>{{ core.getTimerValue }}</span>
-</div>
+  <!-- Timer -->
+  <div class="block timer">
+    <span>{{ timerValue }}</span>
+  </div>
 
-<div class="separator"></div>
-
-<!-- User -->
-<div class="player" [ngClass]="control.getPlayerGameStatus">
-  <!-- Name -->
-  <span>Player</span>
-  <!-- Score -->
-  <strong>{{ score.getPlayerScore }}</strong>
+  <!-- User -->
+  <div class="player" [ngClass]="control.getPlayerGameStatus">
+    <!-- Name -->
+    <span>Player</span>
+    <!-- Score -->
+    <strong>{{ score.getPlayerScore }}</strong>
+  </div>
 </div>

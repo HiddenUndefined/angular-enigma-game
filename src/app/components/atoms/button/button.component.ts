@@ -3,10 +3,10 @@ import { Component, HostBinding, Input } from '@angular/core'
 /**
  * Button types *(only for button color schema)*
  */
-type TButtonTypes = 'danger'
+type TButtonTypes = 'secondary' | 'success' | 'info' | 'light' | 'warning' | 'danger'
 
 @Component({
-  selector: 'button[eg-button]',
+  selector: 'button[eg-button], a[eg-button]',
   standalone: true,
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.css']

@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core'
 // Spaces
-import { EPlayerSides, IScore } from '@quickDraw/core/core.models'
+import { EPlayerSides, EWinnerSides, IScore } from '@quickDraw/core/core.models'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScoreService {
+  // @Properties
+  // Win condition
+  private winScore = 10
+
   // Score getters
   public get getComputerScore (): number {
     return this.score[EPlayerSides.COMPUTER]
@@ -14,8 +18,8 @@ export class ScoreService {
     return this.score[EPlayerSides.PLAYER]
   }
   private score: IScore = {
-    [EPlayerSides.COMPUTER]: 10,
-    [EPlayerSides.PLAYER]: 8
+    [EPlayerSides.COMPUTER]: 0,
+    [EPlayerSides.PLAYER]: 0
   }
 
   // @Methods
@@ -24,10 +28,41 @@ export class ScoreService {
     this.score[EPlayerSides.PLAYER] = 0
   }
 
-  public setPointToComputer (): void {
-    this.score[EPlayerSides.COMPUTER]++
+  public setPointToComputer (point = 1): void {
+    this.score[EPlayerSides.COMPUTER] += point
   }
-  public setPointToPlayer (): void {
-    this.score[EPlayerSides.PLAYER]++
+  public setPointToPlayer (point = 1): void {
+    this.score[EPlayerSides.PLAYER] += point
+  }
+
+  public setWinScore (winScore: number): void {
+    this.winScore = winScore
+  }
+
+  public getWinner (): EWinnerSides | null {
+    if (this.score[EPlayerSides.COMPUTER] >= this.winScore || this.score[EPlayerSides.COMPUTER] > this.score[EPlayerSides.PLAYER]) {
+      return EWinnerSides.COMPUTER
+    }
+    else if (this.score[EPlayerSides.PLAYER] >= this.winScore || this.score[EPlayerSides.PLAYER] > this.score[EPlayerSides.COMPUTER]) {
+      return EWinnerSides.PLAYER
+    }
+    else if (this.score[EPlayerSides.PLAYER] === this.score[EPlayerSides.COMPUTER]) {
+      return EWinnerSides.DRAW
+    }
+
+    return null
+  }
+
+  public checkSomebodyWin (): boolean {
+    let hasWinner = false
+
+    if (
+      this.score[EPlayerSides.COMPUTER] >= this.winScore
+      || this.score[EPlayerSides.PLAYER] >= this.winScore
+    ) {
+      hasWinner = true
+    }
+
+    return hasWinner
   }
 }
