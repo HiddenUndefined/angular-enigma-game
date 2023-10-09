@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
-import { EGridCellStatus, ICell, IGridSize, TGridCellStatus } from '@quickDraw/core/core.models'
+// Global
+import { IGridSize, TGridCellStatus, EGridCellStatus, IGridCellPosition } from '@quickDraw/core/models/game-area.model'
 
 @Injectable({
   providedIn: 'root'
@@ -70,7 +71,7 @@ export class GridAreaService {
     return emptyCellsCount
   }
 
-  public playerSelectCell (position: ICell): void {
+  public playerSelectCell (position: IGridCellPosition): void {
     if (this.checkCellIsAvailableForPlayer(position)) {
       this.setCellStatus(position, EGridCellStatus.WIN)
     }
@@ -79,7 +80,7 @@ export class GridAreaService {
     }
   }
 
-  public checkCellIsAvailableForPlayer (position: ICell): boolean {
+  public checkCellIsAvailableForPlayer (position: IGridCellPosition): boolean {
     return this.gameArea[ position.x ][ position.y ] === EGridCellStatus.ACTIVE
   }
 
@@ -108,7 +109,7 @@ export class GridAreaService {
     }
   }
 
-  public isValidCellStatusForInteraction (position: ICell): boolean {
+  public isValidCellStatusForInteraction (position: IGridCellPosition): boolean {
     const cellStatus = this.gameArea[ position.x ][ position.y ]
 
     return cellStatus === null || cellStatus === EGridCellStatus.ACTIVE
@@ -116,10 +117,10 @@ export class GridAreaService {
 
   /**
    * Set cell status
-   * @param {ICell} position - cell position by row and col indexes
+   * @param {IGridCellPosition} position - cell position by row and col indexes
    * @param {TGridCellStatus} status - cell status
    */
-  private setCellStatus (position: ICell, status: TGridCellStatus): void {
+  private setCellStatus (position: IGridCellPosition, status: TGridCellStatus): void {
     // Set cell status
     this.gameArea[ position.x ][ position.y ] = status
   }
@@ -129,7 +130,7 @@ export class GridAreaService {
    * @param position
    * @private
    */
-  private makeCellActive (position: ICell): void {
+  private makeCellActive (position: IGridCellPosition): void {
     this.setCellStatus(position, EGridCellStatus.ACTIVE)
   }
 
@@ -146,7 +147,7 @@ export class GridAreaService {
     }
   }
 
-  private getRandomCellPosition (): ICell {
+  private getRandomCellPosition (): IGridCellPosition {
     const row = Math.floor(Math.random() * this.gameArea.length)
     const col = Math.floor(Math.random() * this.gameArea[ row ].length)
 

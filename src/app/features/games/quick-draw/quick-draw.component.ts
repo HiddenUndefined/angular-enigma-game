@@ -8,6 +8,7 @@ import { AtomButtonComponent } from '@components/atoms'
 import { NotificationComponent } from '@quickDraw/view/notification'
 import { NgIf } from '@angular/common'
 import { NotificationService } from '@quickDraw/core/notification'
+import { SetupManagerComponent } from '@quickDraw/view/setup-manager/setup-manager.component'
 
 @Component({
   standalone: true,
@@ -20,7 +21,8 @@ import { NotificationService } from '@quickDraw/core/notification'
     ScoreComponent,
     AtomButtonComponent,
     NotificationComponent,
-    NgIf
+    NgIf,
+    SetupManagerComponent
   ],
   selector: 'eg-game-quick-draw-feature',
   templateUrl: './quick-draw.component.html',

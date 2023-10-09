@@ -18,8 +18,8 @@ export class ScoreService {
     return this.score[EPlayerSides.PLAYER]
   }
   private score: IScore = {
-    [EPlayerSides.COMPUTER]: 10,
-    [EPlayerSides.PLAYER]: 8
+    [EPlayerSides.COMPUTER]: 0,
+    [EPlayerSides.PLAYER]: 0
   }
 
   // @Methods
@@ -42,10 +42,11 @@ export class ScoreService {
     else if (this.score[EPlayerSides.PLAYER] >= this.winScore) {
       return EWinnerSides.PLAYER
     }
-    else if (this.score[EPlayerSides.PLAYER] === this.score[EPlayerSides.COMPUTER]) {
-      return EWinnerSides.BOTH
-    }
 
     return null
+  }
+
+  public checkIsDrawWinner (): boolean {
+    return this.score[EPlayerSides.PLAYER] === this.score[EPlayerSides.COMPUTER]
   }
 }

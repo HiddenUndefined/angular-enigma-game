@@ -26,6 +26,38 @@
     cursor: not-allowed;
   }
   /* Styles */
+  &[btn-style='secondary'] {
+    background-color: var(--color-secondary);
+    &:focus-visible {
+      box-shadow: 0 0 0 4px rgba(var(--color-secondary-rgb), 0.25);
+    }
+  }
+  &[btn-style='success'] {
+    background-color: var(--color-success);
+    &:focus-visible {
+      box-shadow: 0 0 0 4px rgba(var(--color-success-rgb), 0.25);
+    }
+  }
+  &[btn-style='info'] {
+    color: var(--color-dark);
+    background-color: var(--color-info);
+    &:focus-visible {
+      box-shadow: 0 0 0 4px rgba(var(--color-info-rgb), 0.25);
+    }
+  }
+  &[btn-style='light'] {
+    color: var(--color-dark);
+    background-color: var(--color-light);
+    &:focus-visible {
+      box-shadow: 0 0 0 4px rgba(var(--color-light-rgb), 0.25);
+    }
+  }
+  &[btn-style='warning'] {
+    background-color: var(--color-warning);
+    &:focus-visible {
+      box-shadow: 0 0 0 4px rgba(var(--color-warning-rgb), 0.25);
+    }
+  }
   &[btn-style='danger'] {
     background-color: var(--color-danger);
     &:focus-visible {

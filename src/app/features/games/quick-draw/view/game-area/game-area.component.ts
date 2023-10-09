@@ -4,7 +4,7 @@ import { NgClass, NgForOf, NgIf } from '@angular/common'
 import { AtomButtonComponent } from '@components/atoms'
 // Spaces
 // # Models
-import { ICell } from '@quickDraw/core/core.models'
+import { IGridCellPosition } from '@quickDraw/core/models/game-area.model'
 // # Core
 import { GridAreaService } from '@quickDraw/core/grid-area'
 import { StatusesService } from '@quickDraw/core/statuses'
@@ -30,13 +30,13 @@ export class GameAreaComponent {
   }
 
   // @Methods
-  public selectCell (position: ICell): void {
+  public selectCell (position: IGridCellPosition): void {
     if (this.areaService.isValidCellStatusForInteraction(position)) {
       this.areaService.playerSelectCell(position)
     }
   }
 
-  public getDisabledCellStatus (position: ICell): boolean {
+  public getDisabledCellStatus (): boolean {
     return !this.statusService.isStarted
   }
 }

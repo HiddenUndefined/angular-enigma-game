@@ -27,6 +27,11 @@ export class QuickDrawCoreService {
   private playerMove$: Observable<void> = new Observable<void>()
   private playerMoveSubscription$: Subscription | null = null
 
+  // Game status
+  public get gameNotStarted (): boolean {
+    return this.gameStatus.isNotStarted
+  }
+
   // @Constructor
   constructor (
     private notification: NotificationService,
