@@ -28,11 +28,11 @@ export class ScoreService {
     this.score[EPlayerSides.PLAYER] = 0
   }
 
-  public setPointToComputer (): void {
-    this.score[EPlayerSides.COMPUTER]++
+  public setPointToComputer (point = 1): void {
+    this.score[EPlayerSides.COMPUTER] += point
   }
-  public setPointToPlayer (): void {
-    this.score[EPlayerSides.PLAYER]++
+  public setPointToPlayer (point = 1): void {
+    this.score[EPlayerSides.PLAYER] += point
   }
 
   public setWinScore (winScore: number): void {

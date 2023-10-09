@@ -156,7 +156,7 @@ export class QuickDrawCoreService {
 
   private playerLiveDowngrade (): void {
     if (this.playerLivesCount === 0) {
-      this.score.setPointToComputer()
+      this.score.setPointToComputer(this.setup.getCurrentSetup.round.winScore)
       this.endGame()
     }
     else {
