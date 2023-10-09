@@ -6,7 +6,11 @@
   </ng-container>
 
   <ng-container *ngIf="!core.gameNotStarted">
-    <eg-quick-draw-score [timerValue]="core.getTimerValue" />
+    <eg-quick-draw-score
+      [gameStatus]="core.getGameStatus"
+      [round]="core.getGameRoundCount"
+      [timerValue]="core.getTimerValue"
+    />
 
     <div class="game-area-wrapper">
       <eg-quick-draw-notification *ngIf="notification.getViewStatus">

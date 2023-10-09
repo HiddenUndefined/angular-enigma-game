@@ -1,12 +1,13 @@
 import { Component, HostBinding, Input } from '@angular/core'
 import { RouterLink } from '@angular/router'
-import { AtomAxisBgComponent } from '@components/atoms'
+import { AtomAxisBgComponent, AtomButtonComponent } from '@components/atoms'
 
 @Component({
   standalone: true,
   imports: [
     RouterLink,
-    AtomAxisBgComponent
+    AtomAxisBgComponent,
+    AtomButtonComponent
   ],
   selector: 'eg-organism-present',
   templateUrl: './present.component.html',

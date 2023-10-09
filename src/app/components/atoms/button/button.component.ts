@@ -6,7 +6,7 @@ import { Component, HostBinding, Input } from '@angular/core'
 type TButtonTypes = 'secondary' | 'success' | 'info' | 'light' | 'warning' | 'danger'
 
 @Component({
-  selector: 'button[eg-button]',
+  selector: 'button[eg-button], a[eg-button]',
   standalone: true,
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.css']

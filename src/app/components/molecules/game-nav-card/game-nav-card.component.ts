@@ -1,12 +1,14 @@
 import { Component, HostBinding, Input } from '@angular/core'
 import { RouterLink } from '@angular/router'
 import { NgIf } from '@angular/common'
+import { AtomButtonComponent } from '@components/atoms'
 
 @Component({
   standalone: true,
   imports: [
     RouterLink,
-    NgIf
+    NgIf,
+    AtomButtonComponent
   ],
   selector: 'eg-molecule-game-nav-card',
   templateUrl: './game-nav-card.component.html',

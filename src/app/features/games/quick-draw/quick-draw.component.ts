@@ -39,5 +39,4 @@ export class QuickDrawComponent {
     protected readonly core: QuickDrawCoreService
   ) {
   }
-
 }

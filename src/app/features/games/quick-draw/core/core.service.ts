@@ -22,6 +22,7 @@ export class QuickDrawCoreService {
   // @Properties
   // Round
   private roundTimerDuration = 0
+  private roundCount = 0
 
   public get getTimerValue (): number {
     return this.roundTimerValue
@@ -37,6 +38,12 @@ export class QuickDrawCoreService {
   // Game status
   public get gameNotStarted (): boolean {
     return this.gameStatus.isNotStarted
+  }
+  public get getGameStatus (): string {
+    return this.gameStatus.getGameStatusTitle
+  }
+  public get getGameRoundCount (): number {
+    return this.roundCount
   }
 
   // @Constructor
@@ -120,6 +127,9 @@ export class QuickDrawCoreService {
     this.score.setWinScore(this.setup.getCurrentSetup.round.winScore)
 
     this.roundTimerDuration = this.setup.getCurrentSetup.round.timerDuration
+    this.convertTimerDurationToPureValue()
+
+    this.roundCount = 0
 
     this.gameStatus.setReady()
   }
@@ -196,6 +206,7 @@ export class QuickDrawCoreService {
       this.endGame()
     }
     else {
+      this.roundCount += 1
       this.createComputerTimer()
     }
   }

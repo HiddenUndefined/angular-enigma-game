@@ -26,18 +26,6 @@
       font-weight: 400;
       margin-bottom: 24px;
     }
-    .link {
-      font-size: 14px;
-      font-weight: 700;
-      text-transform: uppercase;
-      padding: 12px 12px;
-      color: var(--color-white);
-      background-color: var(--color-primary);
-      &:hover {
-        color: var(--color-primary);
-        background-color: var(--color-black);
-      }
-    }
   }
   @media screen and (min-width: 768px) {
     .content-wrapper {
@@ -52,10 +40,8 @@
         font-size: 20px;
         margin-bottom: 32px;
       }
-      .link {
+      .nav-link {
         max-width: 66%;
-        font-size: 20px;
-        padding: 12px 24px;
       }
     }
   }
@@ -71,9 +57,8 @@
         font-size: 24px;
         margin-bottom: 48px;
       }
-      .link {
+      .nav-link {
         max-width: 50%;
-        font-size: 24px;
       }
     }
   }
