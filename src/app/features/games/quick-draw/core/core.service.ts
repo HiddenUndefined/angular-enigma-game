@@ -14,12 +14,20 @@ import {
   pauseGameNotification,
   playerWinNotification
 } from '@quickDraw/core/notification/notification.collection'
+import { EGridCellStatus, IGridCellPosition } from '@quickDraw/core/models/game-area.model'
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuickDrawCoreService {
   // @Properties
+  // Player lives count
+  private playerLivesCount = 0
+
+  public get getPlayerLivesCount (): number {
+    return this.playerLivesCount
+  }
+
   // Round
   private roundTimerDuration = 0
   private roundCount = 0
@@ -58,7 +66,7 @@ export class QuickDrawCoreService {
   }
 
   // @Methods
-  startGame (): void {
+  public startGame (): void {
     this.notification.setViewStatus(false)
 
     this.score.resetScore()
@@ -68,7 +76,7 @@ export class QuickDrawCoreService {
     this.makeRound()
   }
 
-  stopGame (): void {
+  public stopGame (): void {
     this.clearPlayerTimer()
 
     this.notification.setNotification(pauseGameNotification)
@@ -77,7 +85,7 @@ export class QuickDrawCoreService {
     this.gameStatus.setPaused()
   }
 
-  continueGame (): void {
+  public continueGame (): void {
     this.notification.setViewStatus(false)
 
     this.gameStatus.setStarted()
@@ -85,13 +93,13 @@ export class QuickDrawCoreService {
     this.createPlayerTimer()
   }
 
-  resetGame (): void {
+  public resetGame (): void {
     this.destroyGame()
 
     this.initGame()
   }
 
-  endGame (): void {
+  public endGame (): void {
     this.clearPlayerTimer()
 
     this.gameStatus.setOver()
@@ -102,36 +110,58 @@ export class QuickDrawCoreService {
     else if (this.score.getWinner() === EWinnerSides.COMPUTER) {
       this.notification.setNotification(computerWinNotification)
     }
-    else if (this.score.getWinner() === EWinnerSides.BOTH) {
+    else if (this.score.getWinner() === EWinnerSides.DRAW) {
       this.notification.setNotification(drawNotification)
     }
 
     this.notification.setViewStatus(true)
   }
 
-  exitGame (): void {
+  public exitGame (): void {
     this.endGame()
 
     this.gameStatus.resetStatus()
   }
 
-  initGame (): void {
+  public initGame (): void {
     this.notification.setNotification(initGameNotification)
     this.notification.setViewStatus(true)
 
-    this.area.setCountOfActiveCells(this.setup.getCurrentSetup.round.count)
+    this.area.setCountOfActiveCells(this.setup.getCurrentSetup.round.activationCellsCount)
     this.area.setGridParams(this.setup.getCurrentSetup.gridSize)
     this.area.generateGrid()
 
     this.score.resetScore()
     this.score.setWinScore(this.setup.getCurrentSetup.round.winScore)
 
-    this.roundTimerDuration = this.setup.getCurrentSetup.round.timerDuration
+    this.roundTimerDuration = this.setup.getCurrentSetup.round.timerDuration * 1000 // format to ms
     this.convertTimerDurationToPureValue()
 
+    this.playerLivesCount = this.setup.getCurrentSetup.extraLiveCount
     this.roundCount = 0
 
     this.gameStatus.setReady()
+  }
+
+  // Cell handler
+  public cellClickHandler (position: IGridCellPosition): void {
+    if (this.area.isValidCellStatusForInteraction(position)) {
+      this.area.playerSelectCell(position)
+
+      if (this.area.getCellStatus(position) === EGridCellStatus.LOSE) {
+        this.playerLiveDowngrade()
+      }
+    }
+  }
+
+  private playerLiveDowngrade (): void {
+    if (this.playerLivesCount === 0) {
+      this.score.setPointToComputer()
+      this.endGame()
+    }
+    else {
+      this.playerLivesCount -= 1
+    }
   }
 
   private convertTimerDurationToPureValue (): void {
@@ -147,6 +177,16 @@ export class QuickDrawCoreService {
     this.gameStatus.resetStatus()
 
     this.area.resetGrid()
+  }
+
+  // Point
+  private setPointToRoundWinner (): void {
+    if (this.area.checkActiveCellIsAvailable()) {
+      this.area.setLoseStatusToAllActiveCells()
+      this.score.setPointToComputer()
+    } else {
+      this.score.setPointToPlayer()
+    }
   }
 
   // Computer move timer
@@ -187,13 +227,7 @@ export class QuickDrawCoreService {
 
     this.playerMoveSubscription$ = this.playerMove$.subscribe({
       complete: () => {
-        if (this.area.checkActiveCellIsAvailable()) {
-          this.area.setLoseStatusToAllActiveCells()
-          this.score.setPointToComputer()
-        } else {
-          this.score.setPointToPlayer()
-        }
-
+        this.setPointToRoundWinner()
         this.control.toggleMoveSide()
         this.makeRound()
       }
@@ -212,6 +246,6 @@ export class QuickDrawCoreService {
   }
 
   private nextRoundIsValid (): boolean {
-    return this.area.getCountOfEmptyCells() > 0
+    return this.area.getCountOfEmptyCells() > 0 && !this.score.checkSomebodyWin()
   }
 }

@@ -1,6 +1,6 @@
 export interface IRoundSetup {
-  count: number
-  timerDuration: number
+  activationCellsCount: number
+  timerDuration: number // sec
   winScore: number
 }
 
@@ -12,6 +12,7 @@ export interface IGridSetup {
 export interface IGameSetup {
   title: string
   description: string
+  extraLiveCount: number
   round: IRoundSetup
   gridSize: IGridSetup
 }

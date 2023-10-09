@@ -57,6 +57,10 @@ export class GridAreaService {
     this.generateGrid()
   }
 
+  public getCellStatus (position: IGridCellPosition): TGridCellStatus {
+    return this.gameArea[ position.x ][ position.y ]
+  }
+
   public selectNextActiveCells (): void {
     // Count of empty cells
     const countOfEmptyCells = this.getCountOfEmptyCells()

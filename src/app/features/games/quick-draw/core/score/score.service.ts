@@ -40,17 +40,29 @@ export class ScoreService {
   }
 
   public getWinner (): EWinnerSides | null {
-    if (this.score[EPlayerSides.COMPUTER] >= this.winScore) {
+    if (this.score[EPlayerSides.COMPUTER] >= this.winScore || this.score[EPlayerSides.COMPUTER] > this.score[EPlayerSides.PLAYER]) {
       return EWinnerSides.COMPUTER
     }
-    else if (this.score[EPlayerSides.PLAYER] >= this.winScore) {
+    else if (this.score[EPlayerSides.PLAYER] >= this.winScore || this.score[EPlayerSides.PLAYER] > this.score[EPlayerSides.COMPUTER]) {
       return EWinnerSides.PLAYER
+    }
+    else if (this.score[EPlayerSides.PLAYER] === this.score[EPlayerSides.COMPUTER]) {
+      return EWinnerSides.DRAW
     }
 
     return null
   }
 
-  public checkIsDrawWinner (): boolean {
-    return this.score[EPlayerSides.PLAYER] === this.score[EPlayerSides.COMPUTER]
+  public checkSomebodyWin (): boolean {
+    let hasWinner = false
+
+    if (
+      this.score[EPlayerSides.COMPUTER] >= this.winScore
+      || this.score[EPlayerSides.PLAYER] >= this.winScore
+    ) {
+      hasWinner = true
+    }
+
+    return hasWinner
   }
 }

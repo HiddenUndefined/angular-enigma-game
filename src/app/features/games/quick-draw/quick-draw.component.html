@@ -9,6 +9,7 @@
     <eg-quick-draw-score
       [gameStatus]="core.getGameStatus"
       [round]="core.getGameRoundCount"
+      [livesCount]="core.getPlayerLivesCount"
       [timerValue]="core.getTimerValue"
     />
 
@@ -16,7 +17,9 @@
       <eg-quick-draw-notification *ngIf="notification.getViewStatus">
       </eg-quick-draw-notification>
 
-      <eg-quick-draw-game-area />
+      <eg-quick-draw-game-area
+        (cellClickHandler)="core.cellClickHandler($event)"
+      />
     </div>
 
     <eg-quick-draw-control />

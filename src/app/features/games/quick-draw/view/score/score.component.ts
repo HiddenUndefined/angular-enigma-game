@@ -20,6 +20,7 @@ export class ScoreComponent {
   // @Properties
   @Input() public gameStatus!: string
   @Input() public round!: number
+  @Input() public livesCount!: number
   @Input() public timerValue!: number
 
   // @Constructor

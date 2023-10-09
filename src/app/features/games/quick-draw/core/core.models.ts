@@ -13,7 +13,7 @@ export enum EPlayerSides {
 export enum EWinnerSides {
   COMPUTER = EPlayerSides.COMPUTER,
   PLAYER = EPlayerSides.PLAYER,
-  BOTH = 'both'
+  DRAW = 'draw'
 }
 export enum EPlayerStatuses {
   ACTIVE = 'active',

@@ -11,40 +11,43 @@ export class SetupManagerService {
   private setups: TGameSetups = [
     {
       title: 'Easy',
-      description: 'This is easy mode: 5x5 grid, 10 sec for round, 5 rounds. You need 3 points to win.',
+      description: 'This is easy mode: 5x5 grid, 10 sec for round, 5 extra lives. You need 3 points to win.',
+      extraLiveCount: 5,
       gridSize: {
         rows: 5,
         cols: 5
       },
       round: {
-        count: 4,
-        timerDuration: 10000,
+        activationCellsCount: 3,
+        timerDuration: 10,
         winScore: 2
       }
     },
     {
       title: 'Medium',
-      description: 'This is medium mode: 8x8 grid, 8 sec for round, 8 rounds. You need 6 points to win.',
+      description: 'This is medium mode: 8x8 grid, 8 sec for round, 3 extra lives. You need 6 points to win.',
+      extraLiveCount: 3,
       gridSize: {
         rows: 8,
         cols: 8
       },
       round: {
-        count: 8,
-        timerDuration: 8000,
+        activationCellsCount: 5,
+        timerDuration: 8,
         winScore: 6
       },
     },
     {
       title: 'Hard',
-      description: 'This is hard mode: 10x10 grid, 6 sec for round, 10 rounds. You need 10 points to win.',
+      description: 'This is hard mode: 10x10 grid, 6 sec for round, 1 extra lives. You need 10 points to win.',
+      extraLiveCount: 1,
       gridSize: {
         rows: 10,
         cols: 10
       },
       round: {
-        count: 10,
-        timerDuration: 6000,
+        activationCellsCount: 7,
+        timerDuration: 6,
         winScore: 10
       }
     }
