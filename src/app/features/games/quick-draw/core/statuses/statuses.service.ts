@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { EGameStatus, TGameStatus } from '@quickDraw/core/core.models'
+import { EGameStatus, TGameStatus } from '@quickDraw/core/models/game-status.model'
 
 @Injectable({
   providedIn: 'root'

@@ -1,11 +1,9 @@
-import { Component } from '@angular/core'
+import { Component, Output, EventEmitter } from '@angular/core'
+import { NgIf } from '@angular/common'
 // Global
 import { AtomButtonComponent } from '@components/atoms'
 // Spaces
-import { QuickDrawCoreService } from '@quickDraw/core/core.service'
-import { ControlService } from '@quickDraw/core/control'
 import { StatusesService } from '@quickDraw/core/statuses'
-import { NgIf } from '@angular/common'
 
 @Component({
   standalone: true,
@@ -18,10 +16,21 @@ import { NgIf } from '@angular/common'
   styleUrls: ['./control.component.css']
 })
 export class ControlComponent {
+  // @Properties
+  @Output() public stopGameEvent: EventEmitter<void> = new EventEmitter<void>()
+  @Output() public exitGameEvent: EventEmitter<void> = new EventEmitter<void>()
+
+  // @Constructor
   constructor (
-    protected readonly core: QuickDrawCoreService,
-    protected status: StatusesService,
-    protected control: ControlService
-  ) {
+    protected status: StatusesService
+  ) {}
+
+  // @Methods
+  public stopGameHandler (): void {
+    this.stopGameEvent.emit()
+  }
+
+  public exitGameHandler (): void {
+    this.exitGameEvent.emit()
   }
 }

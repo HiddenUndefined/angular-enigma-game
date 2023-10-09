@@ -5,7 +5,7 @@ import { StatusesService } from '@quickDraw/core/statuses'
 import { GridAreaService } from '@quickDraw/core/grid-area'
 import { ControlService } from '@quickDraw/core/control'
 import { ScoreService } from '@quickDraw/core/score'
-import { EWinnerSides } from '@quickDraw/core/core.models'
+import { EWinnerSides } from '@quickDraw/core/models/players.model'
 import { NotificationService } from '@quickDraw/core/notification'
 import { SetupManagerService } from '@quickDraw/core/setup-manager'
 import {
@@ -52,6 +52,12 @@ export class QuickDrawCoreService {
   }
   public get getGameRoundCount (): number {
     return this.roundCount
+  }
+  public get getComputerClassStatus (): string {
+    return this.control.getComputerGameStatus
+  }
+  public get getPlayerClassStatus (): string {
+    return this.control.getPlayerGameStatus
   }
 
   // @Constructor
