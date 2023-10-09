@@ -17,7 +17,7 @@
 
 <div class="gamers-wrapper d-flex fd-column jc-stretch ai-stretch">
   <!-- Computer -->
-  <div class="player" [ngClass]="control.getComputerGameStatus">
+  <div class="player" [ngClass]="computerClassStatus">
     <!-- Name -->
     <span>Computer</span>
     <!-- Score -->
@@ -30,7 +30,7 @@
   </div>
 
   <!-- User -->
-  <div class="player" [ngClass]="control.getPlayerGameStatus">
+  <div class="player" [ngClass]="playerClassStatus">
     <!-- Name -->
     <span>Player</span>
     <!-- Score -->

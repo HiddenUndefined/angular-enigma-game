@@ -1,2 +1,2 @@
-<button *ngIf="status.isStarted" eg-button (click)="core.stopGame()">Stop Game</button>
-<button eg-button colorType="danger" (click)="core.exitGame()">End Game</button>
+<button *ngIf="status.isStarted" eg-button (click)="stopGameHandler()">Stop Game</button>
+<button eg-button colorType="danger" (click)="exitGameHandler()">End Game</button>

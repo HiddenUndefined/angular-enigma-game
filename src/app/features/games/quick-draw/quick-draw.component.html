@@ -11,6 +11,8 @@
       [round]="core.getGameRoundCount"
       [livesCount]="core.getPlayerLivesCount"
       [timerValue]="core.getTimerValue"
+      [computerClassStatus]="core.getComputerClassStatus"
+      [playerClassStatus]="core.getPlayerClassStatus"
     />
 
     <div class="game-area-wrapper">
@@ -22,6 +24,9 @@
       />
     </div>
 
-    <eg-quick-draw-control />
+    <eg-quick-draw-control
+      (stopGameEvent)="core.stopGame()"
+      (exitGameEvent)="core.exitGame()"
+    />
   </ng-container>
 </div>
