@@ -1,8 +1,10 @@
 import { Component, HostBinding } from '@angular/core'
-import { AtomButtonComponent } from '@components/atoms'
-import { NotificationService } from '@quickDraw/core/notification'
 import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common'
+// Global
+import { AtomButtonComponent } from '@components/atoms'
+// Spaces
 import { QuickDrawCoreService } from '@quickDraw/core'
+import { NotificationService } from '@quickDraw/core/notification'
 
 @Component({
   standalone: true,

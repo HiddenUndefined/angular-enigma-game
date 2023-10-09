@@ -5,7 +5,7 @@ import { IGameSetup, TGameSetups } from '@quickDraw/core/models/setup.model'
 @Injectable({
   providedIn: 'root'
 })
-export class QuickDrawSetupManagerService {
+export class SetupManagerService {
   // @Properties
 
   private setups: TGameSetups = [

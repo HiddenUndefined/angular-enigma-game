@@ -1,9 +1,8 @@
-import { Component } from '@angular/core'
+import { Component, Output, EventEmitter } from '@angular/core'
 import { NgForOf, NgIf } from '@angular/common'
 // Global
 import { AtomButtonComponent } from '@components/atoms'
-import { QuickDrawSetupManagerService } from '@quickDraw/core/setup-manager'
-import { QuickDrawCoreService } from '@quickDraw/core'
+import { SetupManagerService } from '@quickDraw/core/setup-manager'
 
 @Component({
   standalone: true,
@@ -17,9 +16,18 @@ import { QuickDrawCoreService } from '@quickDraw/core'
   styleUrls: ['./setup-manager.component.css']
 })
 export class SetupManagerComponent {
+  // @Properties
+
+  @Output() public startGame: EventEmitter<void> = new EventEmitter<void>()
+
   // @Constructor
   constructor (
-    protected core: QuickDrawCoreService,
-    protected manager: QuickDrawSetupManagerService
+    protected manager: SetupManagerService
   ) {}
+
+  // @Methods
+
+  public startGameHandler (): void {
+    this.startGame.emit()
+  }
 }

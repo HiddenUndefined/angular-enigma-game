@@ -1,13 +1,5 @@
 import { Injectable } from '@angular/core'
-
-export interface INotification {
-  title: string
-  message: string
-  button?: {
-    type: 'reset' | 'start' | 'continue'
-    text: string
-  }
-}
+import { INotification } from '@quickDraw/core/models/notification.model'
 
 @Injectable({
   providedIn: 'root'

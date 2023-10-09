@@ -31,6 +31,9 @@ export class StatusesService {
   public setOver (): void {
     this.setStatus(EGameStatus.OVER)
   }
+  public setReady (): void {
+    this.setStatus(EGameStatus.READY)
+  }
   public resetStatus (): void {
     this.setStatus(EGameStatus.NOT_STARTED)
   }

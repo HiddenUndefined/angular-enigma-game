@@ -4,7 +4,7 @@
     *ngFor="let cell of row; let colIndex = index"
     [class]="cell"
     (click)="selectCell({ x: rowIndex, y: colIndex })"
-    [disabled]="getDisabledCellStatus({ x: rowIndex, y: colIndex })"
+    [disabled]="getDisabledCellStatus()"
   >
   </button>
 </div>

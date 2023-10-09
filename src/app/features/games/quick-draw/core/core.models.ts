@@ -1,6 +1,7 @@
 // Enums
 export enum EGameStatus {
   NOT_STARTED = 'not_started',
+  READY = 'ready_to_start',
   STARTED = 'started',
   PAUSED = 'paused',
   OVER = 'over'
@@ -22,7 +23,7 @@ export enum EPlayerStatuses {
 }
 
 // Types
-export type TGameStatus = EGameStatus.NOT_STARTED | EGameStatus.STARTED | EGameStatus.PAUSED | EGameStatus.OVER
+export type TGameStatus = EGameStatus.NOT_STARTED | EGameStatus.READY | EGameStatus.STARTED | EGameStatus.PAUSED | EGameStatus.OVER
 export type TPlayerSide = EPlayerSides.COMPUTER | EPlayerSides.PLAYER | null
 export type TPlayerStatus = EPlayerStatuses.ACTIVE | EPlayerStatuses.WAITING | EPlayerStatuses.WIN | EPlayerStatuses.LOSE
 

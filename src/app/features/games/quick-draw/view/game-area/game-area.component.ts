@@ -23,6 +23,7 @@ import { StatusesService } from '@quickDraw/core/statuses'
   styleUrls: ['./game-area.component.css']
 })
 export class GameAreaComponent {
+  // @Constructor
   constructor (
     protected statusService: StatusesService,
     protected areaService: GridAreaService

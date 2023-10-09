@@ -7,6 +7,13 @@ import { ControlService } from '@quickDraw/core/control'
 import { ScoreService } from '@quickDraw/core/score'
 import { EWinnerSides } from '@quickDraw/core/core.models'
 import { NotificationService } from '@quickDraw/core/notification'
+import { SetupManagerService } from '@quickDraw/core/setup-manager'
+import {
+  computerWinNotification, drawNotification,
+  initGameNotification,
+  pauseGameNotification,
+  playerWinNotification
+} from '@quickDraw/core/notification/notification.collection'
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +21,7 @@ import { NotificationService } from '@quickDraw/core/notification'
 export class QuickDrawCoreService {
   // @Properties
   // Round
-  private roundTimerDuration = 8000 // ms
+  private roundTimerDuration = 0
 
   public get getTimerValue (): number {
     return this.roundTimerValue
@@ -34,6 +41,7 @@ export class QuickDrawCoreService {
 
   // @Constructor
   constructor (
+    private setup: SetupManagerService,
     private notification: NotificationService,
     private area: GridAreaService,
     private gameStatus: StatusesService,
@@ -56,14 +64,7 @@ export class QuickDrawCoreService {
   stopGame (): void {
     this.clearPlayerTimer()
 
-    this.notification.setNotification({
-      title: 'Game paused',
-      message: 'Do you want to continue?',
-      button: {
-        type: 'continue',
-        text: 'Continue'
-      }
-    })
+    this.notification.setNotification(pauseGameNotification)
     this.notification.setViewStatus(true)
 
     this.gameStatus.setPaused()
@@ -89,55 +90,38 @@ export class QuickDrawCoreService {
     this.gameStatus.setOver()
 
     if (this.score.getWinner() === EWinnerSides.PLAYER) {
-      this.notification.setNotification({
-        title: 'You win',
-        message: 'Congratulations on your victory :)',
-        button: {
-          type: 'reset',
-          text: 'Play again'
-        }
-      })
+      this.notification.setNotification(playerWinNotification)
     }
     else if (this.score.getWinner() === EWinnerSides.COMPUTER) {
-      this.notification.setNotification({
-        title: 'Game over',
-        message: 'Don\'t give up, try again :)',
-        button: {
-          type: 'reset',
-          text: 'Try again'
-        }
-      })
+      this.notification.setNotification(computerWinNotification)
     }
     else if (this.score.getWinner() === EWinnerSides.BOTH) {
-      this.notification.setNotification({
-        title: 'Draw',
-        message: 'You are both strong :)',
-        button: {
-          type: 'reset',
-          text: 'Try again'
-        }
-      })
+      this.notification.setNotification(drawNotification)
     }
 
     this.notification.setViewStatus(true)
   }
 
-  initGame (): void {
-    this.notification.setNotification({
-      title: 'Quick draw',
-      message: 'Click on the blue cells as fast as you can!',
-      button: {
-        type: 'start',
-        text: 'Start game'
-      }
-    })
-    this.notification.setViewStatus(true)
-
-    this.score.resetScore()
-
-    this.area.generateGrid()
+  exitGame (): void {
+    this.endGame()
 
     this.gameStatus.resetStatus()
+  }
+
+  initGame (): void {
+    this.notification.setNotification(initGameNotification)
+    this.notification.setViewStatus(true)
+
+    this.area.setCountOfActiveCells(this.setup.getCurrentSetup.round.count)
+    this.area.setGridParams(this.setup.getCurrentSetup.gridSize)
+    this.area.generateGrid()
+
+    this.score.resetScore()
+    this.score.setWinScore(this.setup.getCurrentSetup.round.winScore)
+
+    this.roundTimerDuration = this.setup.getCurrentSetup.round.timerDuration
+
+    this.gameStatus.setReady()
   }
 
   private convertTimerDurationToPureValue (): void {

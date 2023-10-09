@@ -7,20 +7,32 @@ import { IGridSize, TGridCellStatus, EGridCellStatus, IGridCellPosition } from '
 })
 export class GridAreaService {
   // @Properties
-  gameOptions = {
-    countOfActiveCells: 7
-  }
+  private countOfActiveCells!: number
 
   /** Grid size (rows and cols count) */
-  gridSize: IGridSize = {
-    rows: 10,
-    cols: 10
-  }
+  private gridSize!: IGridSize
 
   /** Game area */
   gameArea: Array<Array<TGridCellStatus>> = []
 
   // @Methods
+
+  /**
+   * Set count of active cells
+   * @param {number} count - count of active cells
+   */
+  public setCountOfActiveCells (count: number): void {
+    this.countOfActiveCells = count
+  }
+
+  /**
+   * Set grid params
+   * @param {IGridSize} gridSize - grid size (rows and cols count)
+   */
+  public setGridParams (gridSize: IGridSize): void {
+    this.gridSize = gridSize
+  }
+
   /** Generate grid */
   public generateGrid (): void {
     const grid = []
@@ -51,8 +63,8 @@ export class GridAreaService {
 
     // Select random cell
     this.randomSelectNextActiveCells(
-      countOfEmptyCells > this.gameOptions.countOfActiveCells
-        ? this.gameOptions.countOfActiveCells
+      countOfEmptyCells > this.countOfActiveCells
+        ? this.countOfActiveCells
         : countOfEmptyCells
     )
   }

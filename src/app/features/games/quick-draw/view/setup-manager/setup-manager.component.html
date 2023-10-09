@@ -40,7 +40,7 @@
   <div class="actions-wrapper block-wrapper d-flex fd-column jc-center ai-center">
     <strong class="title">Ready to start the game?</strong>
     <div class="buttons-wrapper d-flex fd-row jc-center ai-center">
-      <button eg-button (click)="core.startGame()" [disabled]="!manager.getCurrentSetup">Yep, start!</button>
+      <button eg-button (click)="startGameHandler()" [disabled]="!manager.getCurrentSetup">Yep, start!</button>
     </div>
   </div>
 </div>

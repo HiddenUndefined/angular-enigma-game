@@ -35,6 +35,10 @@ export class ScoreService {
     this.score[EPlayerSides.PLAYER]++
   }
 
+  public setWinScore (winScore: number): void {
+    this.winScore = winScore
+  }
+
   public getWinner (): EWinnerSides | null {
     if (this.score[EPlayerSides.COMPUTER] >= this.winScore) {
       return EWinnerSides.COMPUTER

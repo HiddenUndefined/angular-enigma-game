@@ -1,10 +1,12 @@
 <div class="content-wrapper d-flex fd-column ai-center jc-center">
   <ng-container *ngIf="core.gameNotStarted">
-    <eg-quick-draw-setup-manager />
+    <eg-quick-draw-setup-manager
+      (startGame)="core.initGame()"
+    />
   </ng-container>
 
   <ng-container *ngIf="!core.gameNotStarted">
-    <eg-quick-draw-score />
+    <eg-quick-draw-score [timerValue]="core.getTimerValue" />
 
     <div class="game-area-wrapper">
       <eg-quick-draw-notification *ngIf="notification.getViewStatus">
