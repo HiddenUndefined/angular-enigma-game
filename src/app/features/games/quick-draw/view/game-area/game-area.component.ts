@@ -41,4 +41,12 @@ export class GameAreaComponent {
   public getDisabledCellStatus (): boolean {
     return !this.statusService.isStarted
   }
+
+  protected cellRowTrackBy (index: number): string {
+    return `${ index }_row`
+  }
+
+  protected cellColTrackBy (index: number): string {
+    return `${ index }_col`
+  }
 }
